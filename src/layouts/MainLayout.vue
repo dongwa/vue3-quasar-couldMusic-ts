@@ -5,7 +5,7 @@
         <!-- logo和标题 -->
         <q-toolbar-title class="q-mr-xl cursor-pointer" shrink>
           <q-icon size="lg" name="track_changes" />
-          网抑音乐
+          网抑云音乐
         </q-toolbar-title>
         <!-- 前进后退按钮 -->
         <q-btn
@@ -52,14 +52,16 @@
           color="grey-1"
           class="q-ml-sm"
           icon="settings"
-        /><q-btn
+        />
+        <q-btn
           round
           size="sm"
           flat
           color="grey-1"
           class="q-ml-sm"
           icon="palette"
-        /><q-btn
+        />
+        <q-btn
           round
           size="sm"
           flat
@@ -75,7 +77,13 @@
       </q-toolbar>
     </q-header>
     <!-- 左边抽屉 -->
-    <q-drawer v-model="left" side="left" overlay behavior="desktop" width="200">
+    <q-drawer
+      v-model="left"
+      side="left"
+      bordered
+      behavior="desktop"
+      :width="230"
+    >
       <SideBar />
     </q-drawer>
     <!-- 主页面 -->

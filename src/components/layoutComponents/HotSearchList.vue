@@ -33,15 +33,13 @@
 </template>
 <script lang="ts">
 import { api } from '../../boot/axios';
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
     let searchVal = ref('');
     let hotSearchList = useHotSearch();
-    onMounted(() => {
-      hotSearchList = useHotSearch();
-    });
+
     return { searchVal, hotSearchList };
   },
 });

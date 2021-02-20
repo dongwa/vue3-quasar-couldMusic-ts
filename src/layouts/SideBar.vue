@@ -1,89 +1,93 @@
 <template>
-  <div class="sidebar">
-    <ul class="sidebar-menu">
-      <li class="sidebar-menu_item active">发现音乐</li>
-      <li class="sidebar-menu_item">视频</li>
-      <li class="sidebar-menu_item">朋友</li>
-      <li class="sidebar-menu_item">直播</li>
-      <li class="sidebar-menu_item">私人FM</li>
-    </ul>
-    <h1 class="sidebar-title">我的音乐</h1>
-    <ul class="sidebar-menu">
-      <li class="sidebar-menu_item">
-        <i class="iconfont icon-local-music"></i
-        ><span class="name">本地音乐</span>
-      </li>
-      <li class="sidebar-menu_item">
-        <i class="iconfont icon-download"></i><span class="name">下载管理</span>
-      </li>
-      <li class="sidebar-menu_item">
-        <i class="iconfont icon-cloud"></i
-        ><span class="name">我的音乐云盘</span>
-      </li>
-      <li class="sidebar-menu_item">
-        <i class="iconfont icon-collect"></i><span class="name">我的收藏</span>
-      </li>
-    </ul>
-    <h1 class="sidebar-title">创建的歌单</h1>
-    <ul class="sidebar-menu">
-      <li class="sidebar-menu_item">
-        <i class="iconfont icon-like"></i><span class="name">我喜欢的音乐</span>
-      </li>
-    </ul>
-  </div>
+  <q-list class="q-mx-sm q-mt-sm sidebar-list" dense>
+    <q-item clickable v-ripple to="/" exact active-class="active-class">
+      <q-item-section class="sidebar-item">发现音乐</q-item-section>
+    </q-item>
+    <q-item clickable v-ripple to="/friends" exact active-class="active-class">
+      <q-item-section class="sidebar-item">朋友</q-item-section>
+    </q-item>
+    <q-item clickable v-ripple to="/live" exact active-class="active-class">
+      <q-item-section class="sidebar-item">直播</q-item-section>
+    </q-item>
+    <q-item clickable v-ripple to="/FM" exact active-class="active-class">
+      <q-item-section class="sidebar-item">私人FM</q-item-section>
+    </q-item>
+    <q-item class="sub-title">
+      <q-item-section> 我的音乐 </q-item-section>
+    </q-item>
+    <q-item clickable v-ripple to="/local" exact active-class="active-class">
+      <q-item-section side>
+        <q-icon size="xs" name="library_music" />
+      </q-item-section>
+      <q-item-section class="sidebar-item">本地音乐</q-item-section>
+    </q-item>
+    <q-item clickable v-ripple to="/download" exact active-class="active-class">
+      <q-item-section side>
+        <q-icon size="xs" name="cloud_download" />
+      </q-item-section>
+
+      <q-item-section class="sidebar-item">下载管理</q-item-section>
+    </q-item>
+    <q-item>
+      <q-item-section class="sub-title">
+        <div>
+          创建的歌单
+          <q-icon
+            v-ripple
+            @click="isExpand = !isExpand"
+            :class="['arrow_drop_down', { 'rotate-270': isExpand }]"
+            name="arrow_drop_down"
+          />
+        </div>
+      </q-item-section>
+      <q-item-section side>
+        <q-icon size="xs" name="add" />
+      </q-item-section>
+    </q-item>
+  </q-list>
+  <!-- 创建的音乐菜单扩展 -->
+  <q-list v-show="isExpand" class="sidebar-list q-mx-xs" dense>
+    <q-item clickable to="/favorite" exact active-class="active-class">
+      <q-item-section side>
+        <q-icon size="sm" name="favorite_border" />
+      </q-item-section>
+      <q-item-section class="sidebar-item"> 我喜欢的音乐 </q-item-section>
+      <q-item-section side>
+        <q-btn icon="favorite" outline size="xs" rounded />
+      </q-item-section>
+    </q-item>
+  </q-list>
 </template>
-
 <script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({});
+import { defineComponent, ref } from 'vue';
+export default defineComponent({
+  setup() {
+    let isExpand = ref(false);
+    return { isExpand };
+  },
+});
 </script>
-
 <style lang="scss" scoped>
-.sidebar {
-  // position: fixed;
-  // top: 60px;
-  // bottom: 0;
-  // left: 0;
-  width: $sidebar-width;
-  padding: 10px;
-  border-right: 1px solid #efefef;
-  box-sizing: border-box;
-
-  .sidebar-menu {
-    .sidebar-menu_item {
-      display: flex;
-      height: 36px;
-      padding-left: 8px;
-      margin-bottom: 2px;
-      font-size: 15px;
-      line-height: 36px;
-      color: #444;
-      cursor: pointer;
-      border-radius: 4px;
-      align-items: center;
-
-      .iconfont {
-        font-size: 18px;
-        color: #000;
-        flex: 0 0 25px;
-      }
-
-      &:hover {
-        background: rgb(246, 246, 247);
-      }
-
-      &.active {
-        font-size: 18px;
-        font-weight: bold;
-        background: rgb(246, 246, 247);
-      }
-    }
+.active-class {
+  font-size: 18px;
+  font-weight: bold;
+  background: rgb(247, 247, 247);
+}
+.sidebar-list {
+  .sidebar-item {
+    font-size: 14px;
+    line-height: 36px;
+    color: #444;
+    border-radius: 4px;
   }
-
-  .sidebar-title {
-    padding: 10px;
-    font-size: 13px;
-    color: rgb(166, 166, 166);
+  .sub-title {
+    font-size: 12px;
+    line-height: 36px;
+    color: #bbb;
+    cursor: pointer;
+  }
+  .arrow_drop_down:hover {
+    color: #000;
   }
 }
 </style>

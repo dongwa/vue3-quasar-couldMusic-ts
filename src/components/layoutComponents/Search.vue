@@ -8,6 +8,7 @@
       class="q-ml-md"
       placeholder="搜索"
       v-model="searchVal"
+      debounce="300"
       @update:modelValue="fetchSearchList()"
       @focus="togglePopup = true"
       @blur="togglePopup = false"
@@ -39,8 +40,11 @@
               v-for="item in getList(category)"
               :key="item.id"
             >
-              <q-item-section>
-                <div v-html="getItemInfo(category, item)"></div>
+              <q-item-section no-wrap class="ellipsis">
+                <div
+                  class="ellipsis"
+                  v-html="getItemInfo(category, item)"
+                ></div>
               </q-item-section>
             </q-item>
           </q-list>
@@ -60,7 +64,7 @@ export default defineComponent({
   setup() {
     let searchVal = ref('');
     let togglePopup = ref(false);
-    let searchList: mytable = reactive({});
+    let searchList: stringIndex = reactive({});
     let order = ref([]);
     function fetchSearchList() {
       api
@@ -75,16 +79,16 @@ export default defineComponent({
         });
     }
     //加个接口才能用方括号访问属性
-    interface mytable {
+    interface stringIndex {
       [index: string]: string;
     }
     function getCategory(val: string, icon?: boolean): string {
-      let Nametabel: mytable = {
+      let Nametabel: stringIndex = {
         songs: '单曲',
         artists: '歌手',
         albums: '专辑',
       };
-      let iconTable: mytable = {
+      let iconTable: stringIndex = {
         songs: 'music_note',
         artists: 'face',
         albums: 'album',
