@@ -1,27 +1,14 @@
 <template>
   <div class="q-pa-md">
-    <carousel-card type="card" :interval="4000">
-      <carousel-card-item v-for="item in 6" :key="item">
-        <h3 class="medium">{{ item }}</h3>
-      </carousel-card-item>
-    </carousel-card>
-    <!-- <carousel-card type="card" :interval="4000">
-      <carousel-card-item v-for="item in bannerList" :key="item">
-          <h3 class="medium">{{ item }}</h3>
-      </carousel-card-item>
-    </carousel-card> -->
+    <CarouselCard :banners="bannerList" />
   </div>
 </template>
 <script lang="ts">
 import { api } from '../../boot/axios';
 import { defineComponent, ref, onMounted } from 'vue';
-import CarouselCard from 'components/carousel-card/main.vue';
-import CarouselCardItem from 'components/carousel-card/item.vue';
+import CarouselCard from 'components/carousel-card/index.vue';
 export default defineComponent({
-  components: {
-    CarouselCard,
-    CarouselCardItem,
-  },
+  components: { CarouselCard },
   setup() {
     let bannerList = ref([]);
     function fetchBannerList() {
