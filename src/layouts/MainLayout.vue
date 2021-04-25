@@ -39,9 +39,20 @@
         />
         <!-- 头像登录等 -->
         <q-space />
-        <q-avatar size="70px" icon="account_circle"> </q-avatar>
+        <q-avatar
+          v-if="!$store.state.auth.isLogin"
+          size="70px"
+          icon="account_circle"
+          @click="$store.commit('auth/toggleLoginForm', true)"
+        >
+        </q-avatar>
+        <q-avatar v-else size="70px" :icon="getAvatar" />
         <span class="cursor-pointer btn-login">
-          未登录
+          {{
+            $store.state.auth.isLogin
+              ? $store.state.auth.userInfo.nickname
+              : '未登录'
+          }}
           <q-icon name="arrow_drop_down" />
         </span>
         <!-- 设置，主题和消息按钮 -->
@@ -86,6 +97,10 @@
     >
       <SideBar />
     </q-drawer>
+    <!-- 登录框 -->
+    <q-dialog v-model="$store.state.auth.loginFormSwitch" persistent>
+      <login />
+    </q-dialog>
     <!-- 主页面 -->
     <q-page-container>
       <router-view />
@@ -94,19 +109,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import SideBar from './SideBar.vue';
 import Search from 'components/layoutComponents/Search.vue';
+import Login from 'components/auth/LoginForm.vue';
 export default defineComponent({
-  components: { Search, SideBar },
+  components: { Search, SideBar, Login },
   setup() {
     const $router = useRouter();
+    const $store = useStore();
     const goBack = () => {
       $router.go(-1);
     };
     return {
       goBack,
+      getAvatar: computed(() => `img:${$store.state.auth.userInfo.avatarUrl}`),
     };
   },
   data() {

@@ -1,2 +1,5 @@
 // app global css in SCSS for
-@import './_reset.scss';
+
+.radius-sm {
+  border-radius: 5px;
+}

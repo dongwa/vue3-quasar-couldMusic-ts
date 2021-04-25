@@ -1,6 +1,6 @@
 <template>
   <q-list class="q-mx-sm q-mt-sm sidebar-list" dense>
-    <q-item clickable v-ripple to="/" exact active-class="active-class">
+    <q-item clickable v-ripple to="/home" active-class="active-class">
       <q-item-section class="sidebar-item">发现音乐</q-item-section>
     </q-item>
     <q-item clickable v-ripple to="/friends" exact active-class="active-class">

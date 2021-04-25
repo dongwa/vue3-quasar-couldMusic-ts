@@ -7,17 +7,20 @@ declare module '@vue/runtime-core' {
   }
 }
 
-const api = axios.create({ baseURL: 'http://localhost:3000' });
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+  withCredentials: true,
+});
 // 请求拦截
 api.interceptors.request.use((cinfig: AxiosRequestConfig) => {
   return cinfig;
 });
 //响应拦截
 api.interceptors.response.use(
-  (response): Promise<any> => {
+  (response): any => {
     // console.log(response);
-    if (response?.data?.code === 200) {
-      return Promise.resolve(response.data);
+    if (response.status === 200) {
+      return response.data;
     } else {
       return Promise.reject(response);
     }

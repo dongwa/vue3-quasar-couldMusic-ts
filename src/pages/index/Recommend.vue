@@ -1,26 +1,21 @@
 <template>
-  <div class="q-pa-md">
-    <CarouselCard :banners="bannerList" />
+  <div class="q-ml-xl q-pa-md">
+    <carousel-card :banners="bannerList" />
+    <recommend-list />
   </div>
 </template>
 <script lang="ts">
-import { api } from '../../boot/axios';
 import { defineComponent, ref, onMounted } from 'vue';
 import CarouselCard from 'components/carousel-card/index.vue';
+import RecommendList from 'components/recommend/RecommendList.vue';
+import { getBanners } from 'src/api/recommend';
+import { IBannerInfo } from 'src/api/recommend/recommend.model';
 export default defineComponent({
-  components: { CarouselCard },
+  components: { CarouselCard, RecommendList },
   setup() {
-    let bannerList = ref([]);
-    function fetchBannerList() {
-      api
-        .get('/banner?type=2')
-        .then((res: any) => {
-          bannerList.value = res.banners;
-          console.log(bannerList);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    let bannerList = ref<IBannerInfo[]>([]);
+    async function fetchBannerList() {
+      bannerList.value = await getBanners(0);
     }
     onMounted(() => {
       fetchBannerList();

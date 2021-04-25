@@ -1,6 +1,7 @@
 import { store } from 'quasar/wrappers';
 import { createStore } from 'vuex';
-
+import auth from './auth';
+import { IAuthState } from './auth/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -17,13 +18,15 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown;
+  // example: unknown;
+  auth: IAuthState;
 }
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
+      auth,
     },
 
     // enable strict mode (adds overhead!)

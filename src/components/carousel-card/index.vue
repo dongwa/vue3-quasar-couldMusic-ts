@@ -10,18 +10,17 @@
       :coverflowEffect="coverflowEffect"
       :initialSlide="1"
       :slides-per-view="2"
+      data-swiper-parallax="-300"
       :pagination="{
         clickable: true,
         bulletClass: 'swiper-pagination-bullet bullet-margin-top',
       }"
       class="swiper-container"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
     >
       <swiper-slide v-for="(item, index) in banners" :key="index">
         <q-img
           class="swiper-img rounded-borders"
-          :src="item.pic"
+          :src="item.imageUrl"
           :ratio="16 / 9"
           spinner-color="primary"
           spinner-size="82px"
@@ -48,9 +47,9 @@ export default defineComponent({
   setup() {
     const coverflowEffect = reactive({
       rotate: 0,
-      stretch: 0,
-      depth: 80,
-      modifier: 2,
+      stretch: 110,
+      depth: 200,
+      modifier: 1,
       slideShadows: true,
     });
     return {
