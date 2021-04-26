@@ -13,3 +13,15 @@ GET {{baseUrl}}/homepage/block/page HTTP/1.1
 
 ###
 GET {{baseUrl}}/personalized?limit=10 HTTP/1.1
+
+###
+GET {{baseUrl}}/personalized/privatecontent HTTP/1.1
+
+###
+GET {{baseUrl}}/personalized/privatecontent/list?limit=10&offset=2 HTTP/1.1
+
+###
+GET {{baseUrl}}/top/song?type=0 HTTP/1.1
+
+###
+GET {{baseUrl}}/personalized/newsong HTTP/1.1

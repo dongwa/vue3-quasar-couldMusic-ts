@@ -7,7 +7,7 @@
     @mouseenter="isHover = true"
   >
     <q-card-section v-if="recommend.type === 0" class="q-pa-none">
-      <q-img class="radius-sm" :src="recommend.picUrl">
+      <q-img class="radius-sm" spinner-color="primary" :src="recommend.picUrl">
         <div class="absolute-top-right caption flex items-center text-caption">
           <q-icon name="play_arrow" />
           {{ playCount(recommend.playCount) }}
@@ -45,11 +45,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
-import { ISongInfo } from 'src/api/recommend/recommend.model';
+import { IPlayListInfo } from 'src/api/recommend/recommend.model';
 export default defineComponent({
   props: {
     recommend: {
-      type: Object as PropType<ISongInfo>,
+      type: Object as PropType<IPlayListInfo>,
       required: true,
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="text-h6 text-weight-bolder">推荐歌单 ></div>
-  <div class="q-my-xs row q-gutter-lg">
+  <div class="q-my-xs row q-gutter-sm justify-between">
     <recommend-item
       class="col-2"
       v-for="(item, index) in recommendList"
@@ -14,13 +14,13 @@ import { api } from '../../boot/axios';
 import { defineComponent, ref, reactive } from 'vue';
 import recommendItem from 'components/recommend/RecommendItem.vue';
 import { getRecommendPlayList } from 'src/api/recommend';
-import { ISongInfo } from 'src/api/recommend/recommend.model';
+import { IPlayListInfo } from 'src/api/recommend/recommend.model';
 export default defineComponent({
   components: { recommendItem },
   setup() {
-    let recommendList = ref<ISongInfo[]>([]);
+    let recommendList = ref<IPlayListInfo[]>([]);
     async function fetchList() {
-      let dailyRecommend: ISongInfo = {
+      let dailyRecommend: IPlayListInfo = {
         id: 0,
         type: -1,
         name: '每日歌曲推荐',
