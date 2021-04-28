@@ -32,7 +32,11 @@
             class="absolute-bottom-right caption q-mr-sm q-mb-sm"
           >
             <q-btn size="sm" round color="white">
-              <q-icon color="primary" name="play_arrow" />
+              <q-icon
+                color="primary"
+                name="play_arrow"
+                @click="setPlaylist()"
+              />
             </q-btn>
           </div>
         </transition>

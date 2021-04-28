@@ -50,8 +50,9 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
-import { INewSongsInfo, IArtist } from 'src/api/recommend/recommend.model';
+import { INewSongsInfo } from 'src/api/recommend/recommend.model';
 import { getNewSongs } from 'src/api/recommend';
+import { IArtist } from 'src/api/player/player.model';
 export default defineComponent({
   setup() {
     let songList = ref<INewSongsInfo[]>([]);

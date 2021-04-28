@@ -1,6 +1,8 @@
+import { IPlayerState } from './player/state';
 import { store } from 'quasar/wrappers';
 import { createStore } from 'vuex';
 import auth from './auth';
+import player from './player';
 import { IAuthState } from './auth/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
@@ -20,6 +22,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown;
   auth: IAuthState;
+  player: IPlayerState;
 }
 
 export default store(function (/* { ssrContext } */) {
@@ -27,6 +30,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
       auth,
+      player,
     },
 
     // enable strict mode (adds overhead!)

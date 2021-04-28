@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFr">
+  <q-layout view="hHh Lpr fFr">
     <q-header class="bg-primary text-white header">
       <q-toolbar>
         <!-- logo和标题 -->
@@ -105,6 +105,16 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer bordered class="bg-white text-black">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
+          </q-avatar>
+          Title
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
