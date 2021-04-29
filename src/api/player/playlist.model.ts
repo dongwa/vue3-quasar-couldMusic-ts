@@ -42,7 +42,7 @@ export interface IPlaylistDetail {
   remixVideo?: any;
 }
 
-interface TrackId {
+export interface TrackId {
   id: number;
   v: number;
   t: number;
@@ -50,7 +50,7 @@ interface TrackId {
   alg?: any;
 }
 
-interface Track {
+export interface Track {
   name: string;
   id: number;
   pst: number;
@@ -107,7 +107,7 @@ interface Al {
   pic: number;
 }
 
-interface Ar {
+export interface Ar {
   id: number;
   name: string;
   tns: any[];
@@ -156,4 +156,46 @@ interface AvatarDetail {
 
 interface Experts {
   '2': string;
+}
+
+export interface ISongInfo {
+  name: string;
+  id: number;
+  pst: number;
+  t: number;
+  ar: Ar[];
+  alia: any[];
+  pop: number;
+  st: number;
+  rt?: any;
+  fee: number;
+  v: number;
+  crbt?: any;
+  cf: string;
+  al: Al;
+  dt: number;
+  h: H;
+  m: H;
+  l: H;
+  a?: any;
+  cd: string;
+  no: number;
+  rtUrl?: any;
+  ftype: number;
+  rtUrls: any[];
+  djId: number;
+  copyright: number;
+  s_id: number;
+  mark: number;
+  originCoverType: number;
+  originSongSimpleData?: any;
+  resourceState: boolean;
+  single: number;
+  noCopyrightRcmd?: any;
+  mv: number;
+  cp: number;
+  mst: number;
+  rtype: number;
+  rurl?: any;
+  publishTime: number;
 }

@@ -8,7 +8,7 @@
         flat
         round
         dense
-        @click="$store.commit('auth/toggleLoginForm', false)"
+        @click="$store.commit('layout/toggleLoginForm', false)"
       />
     </q-card-section>
     <q-card-section>

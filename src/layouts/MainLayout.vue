@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr fFr">
+  <q-layout view="hHh LpR fFf">
     <q-header class="bg-primary text-white header">
       <q-toolbar>
         <!-- logo和标题 -->
@@ -43,7 +43,7 @@
           v-if="!$store.state.auth.isLogin"
           size="70px"
           icon="account_circle"
-          @click="$store.commit('auth/toggleLoginForm', true)"
+          @click="$store.commit('layout/toggleLoginForm', true)"
         >
         </q-avatar>
         <q-avatar v-else size="70px" :icon="getAvatar" />
@@ -89,7 +89,7 @@
     </q-header>
     <!-- 左边抽屉 -->
     <q-drawer
-      v-model="left"
+      v-model="$store.state.layout.leftDrawerOpen"
       side="left"
       bordered
       behavior="desktop"
@@ -97,14 +97,25 @@
     >
       <SideBar />
     </q-drawer>
-    <!-- 登录框 -->
-    <q-dialog v-model="$store.state.auth.loginFormSwitch" persistent>
-      <login />
-    </q-dialog>
+    <!-- 右边抽屉，只在点击当前歌单按钮时展开 -->
+    <q-drawer
+      v-model="$store.state.layout.rightDrawerOpen"
+      side="right"
+      overlay
+      bordered
+      :width="400"
+    >
+      <right-drawer />
+    </q-drawer>
     <!-- 主页面 -->
     <q-page-container>
       <router-view />
     </q-page-container>
+    <!-- 登录框 -->
+    <q-dialog v-model="$store.state.layout.loginFormSwitch" persistent>
+      <login />
+    </q-dialog>
+    <!-- 页脚，播放器 -->
     <q-footer bordered class="bg-white text-black">
       <q-toolbar>
         <q-toolbar-title>
@@ -113,6 +124,13 @@
           </q-avatar>
           Title
         </q-toolbar-title>
+        <q-btn
+          flat
+          round
+          dense
+          icon="more_vert"
+          @click="$store.commit('layout/togglerightDrawerOpen')"
+        />
       </q-toolbar>
     </q-footer>
   </q-layout>
@@ -125,8 +143,9 @@ import { useStore } from 'vuex';
 import SideBar from './SideBar.vue';
 import Search from 'components/layoutComponents/Search.vue';
 import Login from 'components/auth/LoginForm.vue';
+import RightDrawer from './RightDrawer.vue';
 export default defineComponent({
-  components: { Search, SideBar, Login },
+  components: { Search, SideBar, Login, RightDrawer },
   setup() {
     const $router = useRouter();
     const $store = useStore();
@@ -134,14 +153,9 @@ export default defineComponent({
       $router.go(-1);
     };
     return {
+      searchVal: ref(''),
       goBack,
       getAvatar: computed(() => `img:${$store.state.auth.userInfo.avatarUrl}`),
-    };
-  },
-  data() {
-    return {
-      left: true,
-      searchVal: '',
     };
   },
 });

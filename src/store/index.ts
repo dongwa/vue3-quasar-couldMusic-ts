@@ -3,7 +3,9 @@ import { store } from 'quasar/wrappers';
 import { createStore } from 'vuex';
 import auth from './auth';
 import player from './player';
+import layout from './layout';
 import { IAuthState } from './auth/state';
+import { ILayoutState } from './layout/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -23,6 +25,7 @@ export interface StateInterface {
   // example: unknown;
   auth: IAuthState;
   player: IPlayerState;
+  layout: ILayoutState;
 }
 
 export default store(function (/* { ssrContext } */) {
@@ -31,6 +34,7 @@ export default store(function (/* { ssrContext } */) {
       // example
       auth,
       player,
+      layout,
     },
 
     // enable strict mode (adds overhead!)

@@ -6,6 +6,7 @@
     @mouseleave="isHover = false"
     @mouseenter="isHover = true"
   >
+    <!-- 普通歌单 -->
     <q-card-section v-if="recommend.type === 0" class="q-pa-none">
       <q-img class="radius-sm" spinner-color="primary" :src="recommend.picUrl">
         <div class="absolute-top-right caption flex items-center text-caption">
@@ -17,13 +18,19 @@
             v-show="isHover"
             class="absolute-bottom-right caption q-mr-sm q-mb-sm"
           >
-            <q-btn size="sm" round color="white">
+            <q-btn
+              size="sm"
+              round
+              color="white"
+              @click="changePlaylist(recommend.id)"
+            >
               <q-icon color="primary" name="play_arrow" />
             </q-btn>
           </div>
         </transition>
       </q-img>
     </q-card-section>
+    <!-- 每日推荐歌单 -->
     <q-card-section v-else class="q-pa-none">
       <q-img width="100%" class="radius-sm" src="~assets/daily.png">
         <transition name="fade" mode="in-out" persisted :duration="500">
@@ -32,11 +39,7 @@
             class="absolute-bottom-right caption q-mr-sm q-mb-sm"
           >
             <q-btn size="sm" round color="white">
-              <q-icon
-                color="primary"
-                name="play_arrow"
-                @click="setPlaylist()"
-              />
+              <q-icon color="primary" name="play_arrow" />
             </q-btn>
           </div>
         </transition>
@@ -50,6 +53,13 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
 import { IPlayListInfo } from 'src/api/recommend/recommend.model';
+import { useStore } from 'vuex';
+import { getPlaylistInfoById, getPlaylist } from 'src/api/player';
+import {
+  IPlaylistDetail,
+  TrackId,
+  ISongInfo,
+} from 'src/api/player/playlist.model';
 export default defineComponent({
   props: {
     recommend: {
@@ -58,11 +68,22 @@ export default defineComponent({
     },
   },
   setup() {
+    const $s = useStore();
     function playCount(val: number) {
       if (val <= 10000) return val;
       return Math.floor(val / 10000) + '万';
     }
-    return { playCount, isHover: ref(false) };
+    async function changePlaylist(id: number) {
+      let res: IPlaylistDetail = await getPlaylistInfoById(id);
+      let trackIds: TrackId[] = res.trackIds;
+      let ids: string = trackIds.reduce((pre, cur, i) => {
+        if (i === 0) return cur.id + '';
+        return pre + ',' + cur.id;
+      }, '');
+      let playlist: ISongInfo[] = await getPlaylist(ids);
+      $s.commit('player/setPlaylist', playlist);
+    }
+    return { playCount, isHover: ref(false), changePlaylist };
   },
 });
 </script>

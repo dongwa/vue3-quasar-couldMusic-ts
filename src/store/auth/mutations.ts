@@ -6,9 +6,7 @@ const mutation: MutationTree<IAuthState> = {
     state.userInfo = data;
     state.isLogin = true;
   },
-  toggleLoginForm(state, data: boolean) {
-    state.loginFormSwitch = data;
-  },
+
   changeLoginState(state, data: boolean) {
     state.isLogin = data;
   },
