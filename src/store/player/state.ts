@@ -1,4 +1,5 @@
 import { ISong } from 'src/api/player/player.model';
+import { ISongInfo } from 'src/api/player/playlist.model';
 
 //播放方式
 export enum EPlayMode {
@@ -8,8 +9,8 @@ export enum EPlayMode {
 }
 export interface IPlayerState {
   playMode: EPlayMode;
-  curentPlaySong: ISong | null; //当前播放的歌曲
-  playlist: ISong[]; //播放列表
+  curentPlaySong: ISongInfo | null; //当前播放的歌曲
+  playlist: ISongInfo[]; //播放列表
 }
 
 function state(): IPlayerState {

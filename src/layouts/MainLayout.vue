@@ -95,7 +95,7 @@
       behavior="desktop"
       :width="230"
     >
-      <SideBar />
+      <side-bar />
     </q-drawer>
     <!-- 右边抽屉，只在点击当前歌单按钮时展开 -->
     <q-drawer
@@ -117,21 +117,7 @@
     </q-dialog>
     <!-- 页脚，播放器 -->
     <q-footer bordered class="bg-white text-black">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>
-          Title
-        </q-toolbar-title>
-        <q-btn
-          flat
-          round
-          dense
-          icon="more_vert"
-          @click="$store.commit('layout/togglerightDrawerOpen')"
-        />
-      </q-toolbar>
+      <footer-player />
     </q-footer>
   </q-layout>
 </template>
@@ -144,17 +130,20 @@ import SideBar from './SideBar.vue';
 import Search from 'components/layoutComponents/Search.vue';
 import Login from 'components/auth/LoginForm.vue';
 import RightDrawer from './RightDrawer.vue';
+import FooterPlayer from 'components/layoutComponents/FooterPlayer.vue';
+import { StateInterface } from 'src/store';
 export default defineComponent({
-  components: { Search, SideBar, Login, RightDrawer },
+  components: { Search, SideBar, Login, RightDrawer, FooterPlayer },
   setup() {
     const $router = useRouter();
-    const $store = useStore();
+    const $store = useStore<StateInterface>();
     const goBack = () => {
       $router.go(-1);
     };
     return {
       searchVal: ref(''),
       goBack,
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       getAvatar: computed(() => `img:${$store.state.auth.userInfo.avatarUrl}`),
     };
   },

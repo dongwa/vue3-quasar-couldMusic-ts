@@ -3,7 +3,7 @@
   <div class="column q-gutter-x-sm" style="height: 300px">
     <!-- <q-list bordered> -->
     <q-item
-      class="songItem col-3 q-pa-none"
+      class="songItem col-3 q-pa-none w-30"
       dense
       v-for="(item, index) in songList"
       :key="index"
@@ -25,7 +25,7 @@
         </q-img>
       </q-item-section>
       <q-item-section class="q-pa-none q-ml-sm column">
-        <div>
+        <div class="w-80 ellipsis">
           {{ item.name }}
         </div>
         <div class="artists-name text-caption">
@@ -59,12 +59,12 @@ export default defineComponent({
     async function getNewSongList() {
       songList.value = await getNewSongs(12);
     }
-    function getArtists(artists: IArtist[]) {
+    const getArtists = (artists: IArtist[]) => {
       return artists.reduce((pre, cur, i) => {
         if (i === 0) return cur.name;
         return `${pre}/${cur.name}`;
       }, '');
-    }
+    };
     onMounted(() => {
       getNewSongList();
     });

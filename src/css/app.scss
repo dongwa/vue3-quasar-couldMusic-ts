@@ -3,3 +3,9 @@
 .radius-sm {
   border-radius: 5px;
 }
+
+@for $i from 1 through 10 {
+  .w-#{$i}0 {
+    width: 10% * $i !important;
+  }
+}

@@ -16,18 +16,23 @@
     </q-btn-group>
   </div>
   <q-tab-panels v-model="tab" animated>
-    <q-tab-panel name="playlist" class="q-pa-none">
-      <q-scroll-area :visible="false" style="width: 100%; height: 76vh">
-        <q-list v-if="playlist.length > 0" bordered dense>
+    <q-tab-panel name="playlist" class="fit q-pa-none">
+      <q-virtual-scroll style="max-height: 75vh" :items="playlist">
+        <template v-slot="{ item, index }">
           <q-item
-            class="text-caption"
-            v-for="(item, index) in playlist"
+            :class="['text-caption row ', { 'bg-grey-2': index % 2 != 0 }]"
             :key="index"
+            dense
             clickable
+            :active="activeIndex === index"
+            @dblclick="changeCurentPlaySong(item, index)"
+            active-class="text-primary"
           >
-            <q-item-section no-wrap class="q-pa-none">
-              <div class="flex items-center">
-                {{ item.name }}
+            <q-item-section no-wrap class="q-pa-none col-7">
+              <div class="flex items-center fit">
+                <div class="w-70 ellipsis">
+                  {{ item.name }}
+                </div>
                 <q-icon
                   v-if="item.st === 0"
                   size="sm"
@@ -42,18 +47,18 @@
                 />
               </div>
             </q-item-section>
-            <q-item-section no-wrap class="artists-name q-pa-none">
-              {{ getArtists(item.ar) }}
+            <q-item-section no-wrap class="col-2 q-pa-none ellipsis">
+              {{ formatArtistsName(item.ar) }}
             </q-item-section>
-            <q-item-section no-wrap class="artists-name q-pa-none">
-              <q-icon name="print" />
+            <q-item-section no-wrap class="col-1 artists-name q-pa-none">
+              <q-icon class="rotate-135" name="link" />
             </q-item-section>
-            <q-item-section no-wrap class="artists-name q-pa-none">
+            <q-item-section no-wrap class="col-1 artists-name q-pa-none">
               {{ durationTime(item.dt) }}
             </q-item-section>
           </q-item>
-        </q-list>
-      </q-scroll-area>
+        </template>
+      </q-virtual-scroll>
     </q-tab-panel>
     <q-tab-panel name="history">
       <div class="text-h6">Alarms</div>
@@ -62,31 +67,29 @@
   </q-tab-panels>
 </template>
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { ISongInfo, Ar } from 'src/api/player/playlist.model';
+import { defineComponent, ref, computed } from 'vue';
+import { ISongInfo } from 'src/api/player/playlist.model';
+import { useSongInfo } from 'components/hooks/useSongInfo';
 export default defineComponent({
   setup() {
     const $s = useStore();
+    let activeIndex = ref(-1);
+    const { formatArtistsName, durationTime } = useSongInfo();
+    function changeCurentPlaySong(item, index) {
+      activeIndex.value = index;
+      $s.commit('player/setCurentPlaySong', item);
+    }
     return {
       playlist: computed((): ISongInfo[] => {
         console.log('vuex变化', $s.state.player.playlist);
         return $s.state.player.playlist;
       }),
       tab: ref('playlist'),
-      getArtists: function getArtists(artists: Ar[]) {
-        return artists.reduce((pre, cur, i) => {
-          if (i === 0) return cur.name;
-          return `${pre}/${cur.name}`;
-        }, '');
-      },
-      durationTime: function (t: number) {
-        let minutes = Math.floor(t / 1000 / 60);
-        let second = Math.floor((t - minutes * 1000 * 60) / 1000);
-        return `${minutes >= 10 ? minutes : '0' + minutes}:${
-          second >= 10 ? second : '0' + second
-        }`;
-      },
+      activeIndex,
+      formatArtistsName,
+      durationTime,
+      changeCurentPlaySong,
     };
   },
 });
@@ -97,5 +100,8 @@ export default defineComponent({
 }
 .artists-name:hover {
   color: #000;
+}
+.w-70 {
+  max-width: 70%;
 }
 </style>
