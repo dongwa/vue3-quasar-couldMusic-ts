@@ -8,10 +8,10 @@ import SwiperCore, {
 } from 'swiper';
 
 // swiper 单独样式 （less / scss）
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/effect-coverflow/effect-coverflow.scss';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 // swiper 必备组件
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
