@@ -27,7 +27,7 @@
           icon="keyboard_arrow_right"
         />
         <!-- 搜索框 -->
-        <!-- <Search /> -->
+        <Search />
         <!-- 听歌识曲按钮 -->
         <q-btn
           round
@@ -40,21 +40,17 @@
         <!-- 头像登录等 -->
         <q-space />
         <q-avatar
-          v-if="auth.isLogin"
+          v-if="!auth.isLogin"
           size="70px"
           icon="account_circle"
           @click="layout.toggleLoginForm(true)"
         >
         </q-avatar>
         <q-avatar v-else size="70px" :icon="getAvatar" />
-        <!-- <span class="cursor-pointer btn-login">
-          {{
-            $store.state.auth.isLogin
-              ? $store.state.auth.userInfo.nickname
-              : '未登录'
-          }}
+        <span class="cursor-pointer btn-login">
+          {{ auth.isLogin ? auth.userInfo.nickname : '未登录' }}
           <q-icon name="arrow_drop_down" />
-        </span> -->
+        </span>
         <!-- 设置，主题和消息按钮 -->
         <q-btn
           round
@@ -113,11 +109,11 @@
     </q-page-container>
     <!-- 登录框 -->
     <q-dialog v-model="layout.loginFormSwitch" persistent>
-      <!-- <login /> -->
+      <login />
     </q-dialog>
     <!-- 页脚，播放器 -->
     <q-footer bordered class="bg-white text-black">
-      <footer-player />
+      <!-- <footer-player /> -->
     </q-footer>
   </q-layout>
 </template>
@@ -128,8 +124,8 @@ import { useAuthStore, useLayoutStore } from 'src/stores';
 import { useRouter } from 'vue-router';
 import SideBar from './SideBar.vue';
 import RightDrawer from './RightDrawer.vue';
-// import Search from 'components/layoutComponents/Search.vue';
-// import Login from 'components/auth/LoginForm.vue';
+import Search from 'components/search/Search.vue';
+import Login from 'components/auth/LoginForm.vue';
 // import FooterPlayer from 'components/layoutComponents/FooterPlayer.vue';
 
 const auth = useAuthStore();

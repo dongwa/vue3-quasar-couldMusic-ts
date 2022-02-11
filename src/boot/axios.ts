@@ -27,7 +27,7 @@ api.interceptors.response.use(
   (response): any => {
     // console.log(response);
     if (response.status === 200) {
-      return Promise.resolve(response.data);
+      return Promise.resolve(response);
     } else {
       return Promise.reject(response);
     }

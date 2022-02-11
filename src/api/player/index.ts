@@ -7,14 +7,10 @@ export enum PlayerApiUrl {
 }
 
 export const getPlaylistInfoById = async (id: number) => {
-  const res: IPlaylistDetail = (
-    (await api.get(`${PlayerApiUrl.playlist}?id=${id}`)) as any
-  ).playlist;
-  return res;
+  const res = await api.get(`${PlayerApiUrl.playlist}?id=${id}`);
+  return res.data.playlist as IPlaylistDetail;
 };
 export const getPlaylist = async (ids: string) => {
-  const res: ISongInfo[] = (
-    (await api.get(`${PlayerApiUrl.songDetail}?ids=${ids}`)) as any
-  ).songs;
-  return res;
+  const res = await api.get(`${PlayerApiUrl.songDetail}?ids=${ids}`);
+  return res.data.songs as ISongInfo[];
 };

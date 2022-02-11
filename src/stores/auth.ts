@@ -9,7 +9,7 @@ export interface IAuthState {
   userInfo: IUserInfo;
 }
 
-export const useAuthStore = defineStore<string, IAuthState>('auth', {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
     isLogin: false,
     userInfo: {

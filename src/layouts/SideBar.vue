@@ -59,15 +59,12 @@
   </q-list>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  setup() {
-    let isExpand = ref(false);
-    return { isExpand };
-  },
-});
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+let isExpand = ref(false);
 </script>
+
 <style lang="scss" scoped>
 .active-class {
   font-size: 18px;
