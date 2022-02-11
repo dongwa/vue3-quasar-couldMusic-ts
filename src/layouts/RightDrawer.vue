@@ -81,7 +81,6 @@ function changeCurentPlaySong(item: ISongInfo, index: number) {
   player.setCurentPlaySong(item);
 }
 const playlist = computed((): ISongInfo[] => {
-  console.log('vuex变化', player.playlist);
   return player.playlist;
 });
 

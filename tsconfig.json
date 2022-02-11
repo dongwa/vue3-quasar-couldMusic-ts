@@ -1,6 +1,7 @@
 {
   "extends": "@quasar/app/tsconfig-preset",
   "compilerOptions": {
+    "lib": ["es2020", "dom"],
     "strict": true,
     "baseUrl": "."
   }

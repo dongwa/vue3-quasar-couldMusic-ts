@@ -23,29 +23,23 @@ enum RecommendApiUrl {
  * 3: ipad
  */
 export const getBanners = async (type = 0): Promise<IBannerInfo[]> => {
-  const res: IBannerInfo[] = (
-    (await api.get(`${RecommendApiUrl.getBanners}?type=${type}`)) as any
-  ).banners;
-  return res;
+  const res = await api.get(`${RecommendApiUrl.getBanners}?type=${type}`);
+  return res.data.banners;
 };
 
 export const getRecommendPlayList = async (
   limit = 9
 ): Promise<IPlayListInfo[]> => {
-  const res: IPlayListInfo[] = (
-    (await api.get(
-      `${RecommendApiUrl.recommendPlayList}?limit=${limit}`
-    )) as any
-  ).result;
-  return res;
+  const res = await api.get(
+    `${RecommendApiUrl.recommendPlayList}?limit=${limit}`
+  );
+  return res.data.result;
 };
 
 //返回入口列表的三个独家内容
 export const getPrivateContent = async (): Promise<IPrivateConetnt[]> => {
-  const res: IPrivateConetnt[] = (
-    (await api.get(`${RecommendApiUrl.privateContent}`)) as any
-  ).result;
-  return res;
+  const res = await api.get(`${RecommendApiUrl.privateContent}`);
+  return res.data.result;
 };
 /**
  * 返回独家内容列表
@@ -56,15 +50,13 @@ export const getPrivateContentList = async (
   limit: number,
   offset: number
 ): Promise<IPrivateConetntList> => {
-  const res: IPrivateConetntList = await api.get(
+  const res = await api.get(
     `${RecommendApiUrl.privatecontentList}?limit=${limit}&offset=${offset}`
   );
-  return res;
+  return res.data;
 };
 //返回新歌推荐
 export const getNewSongs = async (limit: number): Promise<INewSongsInfo[]> => {
-  const res: INewSongsInfo[] = (
-    (await api(`${RecommendApiUrl.newSongs}?limit=${limit}`)) as any
-  ).result;
-  return res;
+  const res = await api(`${RecommendApiUrl.newSongs}?limit=${limit}`);
+  return res.data.result;
 };
