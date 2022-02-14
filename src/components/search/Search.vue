@@ -17,9 +17,9 @@
       </template>
       <div class="list-container" v-show="togglePopup">
         <!-- 热搜 -->
-        <HotSearchList v-if="searchVal === ''" />
+        <Suspense v-if="searchVal.length === 0"> <HotSearchList /></Suspense>
         <!-- 普通搜索 -->
-        <CommonSearchList />
+        <CommonSearchList v-else />
       </div>
     </q-input>
   </div>
@@ -35,6 +35,7 @@ let togglePopup = ref(false);
 
 provide('searchVal', searchVal);
 </script>
+
 <style lang="scss" scoped>
 .list-container {
   position: absolute;
