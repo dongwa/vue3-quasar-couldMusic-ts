@@ -10,9 +10,9 @@
         class="hot-search-item"
       >
         <q-item-section side>
-          <q-item-label :class="[{ 'index-top': index < 3 }, 'index']">{{
-            index + 1
-          }}</q-item-label>
+          <q-item-label :class="[{ 'index-top': index < 3 }, 'index']">
+            {{ index + 1 }}
+          </q-item-label>
         </q-item-section>
         <q-item-section>
           <q-item-label :class="[{ 'text-weight-bold': index < 3 }, 'name']">
@@ -23,8 +23,8 @@
               v-if="item.iconType"
               :src="item.iconUrl"
             ></q-img>
-            <span class="score">{{ item.score }}</span></q-item-label
-          >
+            <span class="score">{{ item.score }}</span>
+          </q-item-label>
           <q-item-label class="content">{{ item.content }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -39,7 +39,7 @@ import { hotSearchItem, getHotSearch } from 'src/api/search';
 let hotSearchList = ref<hotSearchItem[]>([]);
 hotSearchList.value = await getHotSearch();
 
-console.log('=====>', hotSearchList);
+console.log('hotSearch=====>', hotSearchList);
 </script>
 <style lang="scss" scoped>
 .hot-search-list {
