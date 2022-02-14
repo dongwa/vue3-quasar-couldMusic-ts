@@ -15,7 +15,7 @@ declare module '@vue/runtime-core' {
 // for each client)
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: process.env.API,
   withCredentials: true,
 });
 // 请求拦截

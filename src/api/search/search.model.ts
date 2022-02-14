@@ -1,4 +1,4 @@
-import { IAlbum, ISong } from '../player/player.model';
+import { IAlbum, ISong, IArtist } from '../player/player.model';
 
 export interface hotSearchItem {
   alg: string;
@@ -12,7 +12,9 @@ export interface hotSearchItem {
 }
 
 export interface ICommonSearch {
-  albums: IAlbum[];
-  order: string[];
-  songs: ISong[];
+  albums?: IAlbum[];
+  songs?: ISong[];
+  artists?: IArtist[];
+  playlists?: any[];
+  order?: string[];
 }
