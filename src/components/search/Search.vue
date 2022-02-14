@@ -9,7 +9,6 @@
       placeholder="搜索"
       v-model="searchVal"
       debounce="300"
-      @update:modelValue="fetchSearchList()"
       @focus="togglePopup = true"
       @blur="togglePopup = false"
     >
@@ -20,36 +19,21 @@
         <!-- 热搜 -->
         <HotSearchList v-if="searchVal === ''" />
         <!-- 普通搜索 -->
-        <CommonSearchList :searchVal="searchVal" />
+        <CommonSearchList />
       </div>
     </q-input>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getSearchList, ICommonSearch } from 'src/api/search';
-import { ref, reactive, provide } from 'vue';
+import { ref, provide } from 'vue';
 import HotSearchList from './HotSearchList.vue';
 import CommonSearchList from './CommonSearchList.vue';
-import { searchListKey } from './models';
+
 let searchVal = ref('');
 let togglePopup = ref(false);
 
-let searchList = reactive<ICommonSearch>({});
-
-let order = ref([]);
-
-provide(searchListKey, searchList);
-provide('order', order.value);
-async function fetchSearchList() {
-  const res = await getSearchList(searchVal.value);
-  console.log('getSearchList=====>', res);
-
-  if (res?.length > 0) {
-    searchList = res;
-    order.value = res.order;
-  }
-}
+provide('searchVal', searchVal);
 </script>
 <style lang="scss" scoped>
 .list-container {

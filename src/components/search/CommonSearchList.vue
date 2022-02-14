@@ -1,5 +1,6 @@
 <template>
-  <div class="search-list">
+  <div class="search-list" v-show="!loading">
+    <div>searchVal:{{ searchVal }}</div>
     <div class="title">
       搜'<span class="sp">{{ searchVal }}</span
       >'相关的结果>
@@ -21,38 +22,47 @@
       </q-item>
     </q-list>
   </div>
+  <q-inner-loading :showing="loading">
+    <q-spinner-gears size="50px" color="primary" />
+  </q-inner-loading>
 </template>
 <script lang="ts" setup>
-import { getSearchList } from 'src/api/search';
-import { inject, reactive, ref } from 'vue';
+import { getSearchList, ICommonSearch } from 'src/api/search';
+import { watch, inject, reactive, ref } from 'vue';
+type orderType = Exclude<keyof ICommonSearch, 'order'>;
+type table = Record<orderType, { label: string; icon: string }>;
 
-const props = defineProps({
-  searchVal: {
-    type: String,
-    required: true,
-  },
-  order: {
-    type: Object,
-  },
-});
-
-const Nametabel = {
-  songs: '单曲',
-  artists: '歌手',
-  albums: '专辑',
+const Nametabel: table = {
+  songs: { label: '单曲', icon: 'music_note' },
+  artists: { label: '歌手', icon: 'face' },
+  albums: { label: '专辑', icon: 'album' },
+  playlists: { label: '歌单', icon: '' },
 };
-const iconTable = {
-  songs: 'music_note',
-  artists: 'face',
-  albums: 'album',
-};
-let searchList = inject('searchList');
-let order = inject('order');
 
-function getCategory(val: keyof typeof Nametabel, icon?: boolean): string {
-  return icon ? iconTable[val] : Nametabel[val];
+let searchVal = inject('searchVal') as string;
+let order = ref([] as orderType[]);
+let searchList = reactive({} as ICommonSearch);
+let loading = ref(false);
+
+watch(
+  () => searchVal,
+  async (newVal: string) => {
+    loading.value = true;
+    const res = await getSearchList(newVal);
+    if (res) {
+      searchList = res;
+      order.value = res.order;
+    }
+    loading.value = false;
+  }
+);
+
+function getCategory(val: orderType, icon?: boolean): string {
+  return icon ? Nametabel[val].icon : Nametabel[val].label;
 }
-function getList(val: string): any {
+function getList(val: orderType): any {
+  console.log('getList===》', val, searchList[val]);
+
   return searchList[val];
 }
 function getArtistName(category: string, item: any) {
@@ -64,10 +74,10 @@ function getItemInfo(category: string, item: any) {
   // 原始字符串
   let str = `${item.name as string}-${ArtistNam}`;
   //将关键字高亮
-  let replaceReg = new RegExp(searchVal.value, 'g');
+  let replaceReg = new RegExp(searchVal, 'g');
   // 高亮替换v-html值
   let replaceString =
-    '<span style="color: #5480b1 !important;">' + searchVal.value + '</span>';
+    '<span style="color: #5480b1 !important;">' + searchVal + '</span>';
   // 开始替换
   str = str.replace(replaceReg, replaceString);
   return str;
