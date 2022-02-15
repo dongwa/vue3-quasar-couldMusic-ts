@@ -22,13 +22,12 @@
       </q-item>
     </q-list>
   </div>
-  <q-inner-loading :showing="loading">
-    <q-spinner-bars size="50px" color="primary" />
-  </q-inner-loading>
+  <Loading :showing="loading"></Loading>
 </template>
 <script lang="ts" setup>
 import { getSearchList, ICommonSearch } from 'src/api/search';
 import { inject, reactive, ref, watchEffect } from 'vue';
+import Loading from '../loading/index.vue';
 type orderType = Exclude<keyof ICommonSearch, 'order'>;
 type table = Record<orderType, { label: string; icon: string }>;
 

@@ -17,23 +17,28 @@
     <q-card-section>
       <img :src="QRcode" />
     </q-card-section>
+    <Loading :showing="loading"></Loading>
   </q-card>
 </template>
 <script lang="ts" setup>
 import { useAuthStore, useLayoutStore } from 'src/stores';
-import { ref, onMounted, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { getQRKey, createQRbase64, checkPrLogin } from '../../api/auth/index';
+import Loading from '../loading/index.vue';
 
 const auth = useAuthStore();
 const layout = useLayoutStore();
 let QRcode = ref('');
 let state = ref(false); //标志是否开始检测二维码
+let loading = ref(false);
 let key = '';
 let timer: NodeJS.Timeout = Object.create(null);
 const useGetQR = async () => {
+  loading.value = true;
   key = await getQRKey();
   QRcode.value = await createQRbase64(key);
   state.value = true;
+  loading.value = false;
 };
 
 watch(state, (newstate) => {
@@ -42,10 +47,12 @@ watch(state, (newstate) => {
       const statusRes: any = await checkPrLogin(key).catch((err) => {
         console.log(err);
       });
+      // 800表示本次二维码已经过期
       if (statusRes.code === 800) {
         state.value = false;
         clearInterval(timer);
       }
+      // 803 表示登录已经完成
       if (statusRes.code === 803) {
         // 这一步会返回cookie
         clearInterval(timer);
@@ -56,8 +63,8 @@ watch(state, (newstate) => {
     }, 3000);
   }
 });
-onMounted(async () => {
-  useGetQR();
-  await checkPrLogin(key);
+
+useGetQR().then(() => {
+  checkPrLogin(key);
 });
 </script>
