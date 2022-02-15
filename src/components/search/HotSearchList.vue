@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-search-list">
+  <div class="hot-search-list" v-show="!loading">
     <div class="hot-title">热搜榜</div>
     <q-list v-if="hotSearchList">
       <q-item
@@ -30,6 +30,9 @@
       </q-item>
     </q-list>
   </div>
+  <q-inner-loading :showing="loading">
+    <q-spinner-bars size="50px" color="primary" />
+  </q-inner-loading>
 </template>
 
 <script lang="ts" setup>
@@ -37,9 +40,14 @@ import { ref } from 'vue';
 import { hotSearchItem, getHotSearch } from 'src/api/search';
 
 let hotSearchList = ref<hotSearchItem[]>([]);
-hotSearchList.value = await getHotSearch();
+let loading = ref(false);
 
-console.log('hotSearch=====>', hotSearchList);
+const getDate = async () => {
+  loading.value = true;
+  hotSearchList.value = await getHotSearch();
+  loading.value = false;
+};
+getDate();
 </script>
 <style lang="scss" scoped>
 .hot-search-list {
