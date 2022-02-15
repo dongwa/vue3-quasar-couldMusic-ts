@@ -30,14 +30,13 @@
       </q-item>
     </q-list>
   </div>
-  <q-inner-loading :showing="loading">
-    <q-spinner-bars size="50px" color="primary" />
-  </q-inner-loading>
+  <Loading :showing="loading"></Loading>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { hotSearchItem, getHotSearch } from 'src/api/search';
+import Loading from '../loading/index.vue';
 
 let hotSearchList = ref<hotSearchItem[]>([]);
 let loading = ref(false);

@@ -8,22 +8,26 @@ enum ApiUrl {
   getUerInfo = '/user/account',
 }
 //调用此接口可生成一个用于二维码登录的key
-export const getQRKey = async () => {
+export const getQRKey = async (): Promise<string> => {
   const res = await api.get(`${ApiUrl.getKey}?timerstamp=${Date.now()}`);
-  console.log('getQRKey====>', res);
-
-  return res.data.unikey as string;
+  return res.data.data.unikey;
 };
+
 //获取登录二维码，调用之前得先获得key
 export const createQRbase64 = async (key: string) => {
-  return (
-    await api.get(
-      `${ApiUrl.createQR}?key=${key}&qrimg=true&timerstamp=${Date.now()}`
-    )
-  ).data.qrimg;
+  const res = await api.get(
+    `${ApiUrl.createQR}?key=${key}&qrimg=true&timerstamp=${Date.now()}`
+  );
+  return res.data.data.qrimg;
 };
-//轮询此接口可获取二维码扫码状态
-//800为二维码过期,801为等待扫码,802为待确认,803为授权登录成功(803状态码下会返回cookies和用户名头像)
+
+/**
+ * 轮询此接口可获取二维码扫码状态
+ * 800为二维码过期
+ * 801为等待扫码
+ * 802为待确认
+ * 803为授权登录成功(803状态码下会返回cookies和用户名头像)
+ **/
 export const checkPrLogin = async (key: string) => {
   return await api.get(`${ApiUrl.check}?key=${key}&timerstamp=${Date.now()}`);
 };
