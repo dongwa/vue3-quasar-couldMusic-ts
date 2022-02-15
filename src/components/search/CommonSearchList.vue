@@ -45,7 +45,6 @@ let searchList = reactive({} as ICommonSearch);
 let loading = ref(false);
 
 watchEffect(async () => {
-  console.log('监听到变化');
   loading.value = true;
   const res = await getSearchList(searchVal.value);
   if (res) {
@@ -59,8 +58,6 @@ function getCategory(val: orderType, icon?: boolean): string {
   return icon ? Nametabel[val].icon : Nametabel[val].label;
 }
 function getList(val: orderType): any {
-  console.log('getList===》', val, searchList[val]);
-
   return searchList[val];
 }
 function getArtistName(category: string, item: any) {

@@ -15,14 +15,12 @@
       <template v-slot:prepend>
         <q-icon name="search" color="white" />
       </template>
-      <Transition>
-        <div class="list-container" v-show="togglePopup">
-          <!-- 热搜 -->
-          <HotSearchList v-if="searchVal.length === 0" />
-          <!-- 普通搜索 -->
-          <CommonSearchList v-else />
-        </div>
-      </Transition>
+      <div class="list-container" v-show="togglePopup">
+        <!-- 热搜 -->
+        <HotSearchList v-if="searchVal.length === 0" />
+        <!-- 普通搜索 -->
+        <CommonSearchList v-else />
+      </div>
     </q-input>
   </div>
 </template>
