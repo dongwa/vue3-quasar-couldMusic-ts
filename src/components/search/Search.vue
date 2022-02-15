@@ -15,12 +15,14 @@
       <template v-slot:prepend>
         <q-icon name="search" color="white" />
       </template>
-      <div class="list-container" v-show="togglePopup">
-        <!-- 热搜 -->
-        <Suspense v-if="searchVal.length === 0"> <HotSearchList /></Suspense>
-        <!-- 普通搜索 -->
-        <CommonSearchList v-else />
-      </div>
+      <Transition>
+        <div class="list-container" v-show="togglePopup">
+          <!-- 热搜 -->
+          <HotSearchList v-if="searchVal.length === 0" />
+          <!-- 普通搜索 -->
+          <CommonSearchList v-else />
+        </div>
+      </Transition>
     </q-input>
   </div>
 </template>
@@ -41,32 +43,12 @@ provide('searchVal', searchVal);
   position: absolute;
   width: 300px;
   height: 520px;
-  overflow: scroll;
+  overflow-y: auto;
   top: 40px;
   left: -50px;
   z-index: 999;
   background: #fff;
   border: 2px solid #f4f4f4;
   border-radius: 10px;
-}
-.sp {
-  color: #5480b1 !important;
-}
-.search-list {
-  overflow: auto;
-  overflow-x: hidden;
-  font-size: 12px;
-  color: #333;
-  .title {
-    margin: 5px 5px;
-  }
-  .sub-title {
-    display: flex;
-    align-items: center;
-    height: 28px;
-    padding: 0 5px;
-    line-height: 28px;
-    background: #f4f4f4;
-  }
 }
 </style>
