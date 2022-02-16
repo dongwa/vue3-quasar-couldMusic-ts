@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-search-list">
+  <div class="hot-search-list" v-show="!loading">
     <div class="hot-title">热搜榜</div>
     <q-list v-if="hotSearchList">
       <q-item
@@ -10,9 +10,9 @@
         class="hot-search-item"
       >
         <q-item-section side>
-          <q-item-label :class="[{ 'index-top': index < 3 }, 'index']">{{
-            index + 1
-          }}</q-item-label>
+          <q-item-label :class="[{ 'index-top': index < 3 }, 'index']">
+            {{ index + 1 }}
+          </q-item-label>
         </q-item-section>
         <q-item-section>
           <q-item-label :class="[{ 'text-weight-bold': index < 3 }, 'name']">
@@ -23,23 +23,30 @@
               v-if="item.iconType"
               :src="item.iconUrl"
             ></q-img>
-            <span class="score">{{ item.score }}</span></q-item-label
-          >
+            <span class="score">{{ item.score }}</span>
+          </q-item-label>
           <q-item-label class="content">{{ item.content }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
   </div>
+  <Loading :showing="loading"></Loading>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { hotSearchItem, getHotSearch } from 'src/api/search';
+import Loading from '../loading/index.vue';
 
 let hotSearchList = ref<hotSearchItem[]>([]);
-hotSearchList.value = await getHotSearch();
+let loading = ref(false);
 
-console.log('=====>', hotSearchList);
+const getDate = async () => {
+  loading.value = true;
+  hotSearchList.value = await getHotSearch();
+  loading.value = false;
+};
+getDate();
 </script>
 <style lang="scss" scoped>
 .hot-search-list {
