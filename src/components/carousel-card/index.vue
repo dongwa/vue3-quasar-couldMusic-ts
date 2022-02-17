@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" v-if="!loading">
     <swiper
       loop
       autoplay
@@ -35,9 +35,11 @@
       </swiper-slide>
     </swiper>
   </div>
+  <Skeleton v-else></Skeleton>
 </template>
 
 <script lang="ts" setup>
+import Skeleton from 'components/skeleton/Ytb.vue';
 //  swiper 额外组件配置
 import { Navigation, Pagination, EffectCoverflow, Parallax } from 'swiper';
 
@@ -49,14 +51,17 @@ import 'swiper/css/effect-coverflow';
 // swiper 必备组件
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import { PropType, reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import { getBanners } from 'src/api/recommend';
+import { IBannerInfo } from 'src/api/recommend/recommend.model';
 
-defineProps({
-  banners: {
-    type: Array as PropType<Array<any>>,
-    required: true,
-  },
-});
+let loading = ref(true);
+let banners = ref<IBannerInfo[]>([]);
+async function fetchBannerList() {
+  loading.value = true;
+  banners.value = await getBanners(0);
+  loading.value = false;
+}
 
 const coverflowEffect = reactive({
   rotate: 0,
@@ -67,6 +72,8 @@ const coverflowEffect = reactive({
 });
 
 const modules = [Navigation, Pagination, EffectCoverflow, Parallax];
+
+fetchBannerList();
 </script>
 
 <style lang="scss" scoped>
