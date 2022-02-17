@@ -1,7 +1,7 @@
 <template>
   <div class="q-ml-xl q-pa-md q-gutter-y-lg">
     <!-- banners -->
-    <carousel-card :banners="bannerList" />
+    <carousel-card />
     <!-- 推荐歌单 -->
     <recommend-list />
     <!-- 独家放送 -->
@@ -11,21 +11,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { getBanners } from 'src/api/recommend';
-import { IBannerInfo } from 'src/api/recommend/recommend.model';
 import CarouselCard from 'components/carousel-card/index.vue';
 import RecommendList from 'components/recommend/RecommendList.vue';
 import PrivateContentList from 'components/recommend/PrivateContentList.vue';
 import NewSong from 'components/recommend/NewSong.vue';
-
-let bannerList = ref<IBannerInfo[]>([]);
-async function fetchBannerList() {
-  bannerList.value = await getBanners(0);
-}
-onMounted(() => {
-  fetchBannerList();
-});
 </script>
 <style>
 .el-carousel__item h3 {
