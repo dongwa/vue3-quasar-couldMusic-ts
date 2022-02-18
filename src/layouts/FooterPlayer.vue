@@ -40,8 +40,8 @@
               :disable="!playSongUrlInfo"
               round
               flat
-              icon="play_arrow"
-              @click="onClick"
+              :icon="playing ? 'stop' : 'play_arrow'"
+              @click="handlePlayOrPause"
             />
             <q-btn
               :disable="!playSongUrlInfo"
@@ -74,7 +74,12 @@
         </q-card-section>
         <q-card-section>
           <q-card-actions align="right" class="flex items-center">
-            <audio :src="playSongUrlInfo?.url" autoplay></audio>
+            <audio
+              :src="playSongUrlInfo?.url"
+              ref="playerAudio"
+              autoplay
+              @playing="onPlaying"
+            ></audio>
             <q-btn
               flat
               round
@@ -107,26 +112,45 @@ let timeLen = computed(() => {
   return '0:00';
 });
 
+//监听当前播放歌曲变化
 watch(curentPlaySong, async () => {
   if (curentPlaySong.value) {
     const res = await getPlayUrl(curentPlaySong.value.id);
     playSongUrlInfo.value = res;
   }
 });
+
 let artistsNames = computed(() => {
   if (curentPlaySong.value) {
     return curentPlaySong.value.ar.reduce((res, cur) => (res += cur.name), '');
   }
   return '';
 });
+
+let playerAudio = ref<HTMLAudioElement>();
+let playing = ref(false);
+
+function onPlaying() {
+  console.log('on playing');
+  playing.value = true;
+}
+
+function play() {
+  playerAudio.value?.play();
+  playing.value = true;
+}
+function pause() {
+  playerAudio.value?.pause();
+  playing.value = false;
+}
+function handlePlayOrPause() {
+  playing.value ? pause() : play();
+}
 function onClick() {
   console.log('');
 }
 </script>
 <style lang="scss" scoped>
-// .max-w {
-//   max-width: 80%;
-// }
 .play-time {
   margin: 0 5px;
 }
