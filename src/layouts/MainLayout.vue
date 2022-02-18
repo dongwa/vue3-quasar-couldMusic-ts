@@ -113,7 +113,7 @@
     </q-dialog>
     <!-- 页脚，播放器 -->
     <q-footer bordered class="bg-white text-black">
-      <!-- <footer-player /> -->
+      <FooterPlayer />
     </q-footer>
   </q-layout>
 </template>
@@ -126,7 +126,7 @@ import SideBar from './SideBar.vue';
 import RightDrawer from './RightDrawer.vue';
 import Search from 'components/search/Search.vue';
 import Login from 'components/auth/LoginForm.vue';
-// import FooterPlayer from 'components/layoutComponents/FooterPlayer.vue';
+import FooterPlayer from './FooterPlayer.vue';
 
 const auth = useAuthStore();
 const $router = useRouter();

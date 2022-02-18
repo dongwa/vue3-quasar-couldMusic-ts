@@ -82,6 +82,7 @@ async function changePlaylist(id: number) {
   }, '');
   let playlist: ISongInfo[] = await getPlaylist(ids);
   player.setPlaylist(playlist);
+  player.setCurentPlaySong(playlist[0]);
 }
 </script>
 <style lang="scss" scoped>
