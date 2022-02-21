@@ -34,19 +34,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { hotSearchItem, getHotSearch } from 'src/api/search';
 import Loading from '../loading/index.vue';
+import { useFetchWithLoading } from '../hooks/loading';
+import { getHotSearch } from 'src/api/search';
 
-let hotSearchList = ref<hotSearchItem[]>([]);
-let loading = ref(false);
-
-const getDate = async () => {
-  loading.value = true;
-  hotSearchList.value = await getHotSearch();
-  loading.value = false;
-};
-getDate();
+const { data: hotSearchList, loading } = useFetchWithLoading(getHotSearch);
 </script>
 <style lang="scss" scoped>
 .hot-search-list {
