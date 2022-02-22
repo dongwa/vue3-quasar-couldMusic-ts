@@ -17,4 +17,5 @@ export const useLayoutStore = defineStore('layout', {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },
   },
+  persist: true,
 });
