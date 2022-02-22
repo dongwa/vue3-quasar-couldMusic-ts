@@ -92,7 +92,7 @@ async function changePlaylist(id: number) {
   /** 2. 避免等待很久，先把歌单中的第一首歌播放 */
   let ids = trackIds[0].id.toString();
   let curSong = await getPlaylist(ids);
-  player.setCurentPlaySong(curSong[0]);
+  player.setCurentPlaySong(curSong[0], 0);
 
   /** 3. 播放后再获取歌单内的所有歌曲,网络很慢，尽量使用普通for来提升性能，，，， */
   for (let i = 0; i < trackIds.length; i++) {

@@ -78,7 +78,7 @@ const player = usePlayerStore();
 
 function changeCurentPlaySong(item: ISongInfo, index: number) {
   activeIndex.value = index;
-  player.setCurentPlaySong(item);
+  player.setCurentPlaySong(item, index);
 }
 const playlist = computed((): ISongInfo[] => {
   return player.playlist;

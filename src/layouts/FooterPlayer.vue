@@ -23,18 +23,22 @@
         <q-card-section class="cloumn col-6 items-center">
           <div class="row justify-center q-gutter-md">
             <q-btn
-              :disable="!playSongUrlInfo"
+              :disable="!curentPlaySong"
               round
               flat
-              icon="repeat"
-              @click="onClick"
-            />
+              :icon="playMode.icon"
+              @click="player.changePlayMode()"
+            >
+              <q-tooltip>
+                {{ playMode.lebal }}
+              </q-tooltip>
+            </q-btn>
             <q-btn
-              :disable="!playSongUrlInfo"
+              :disable="!curentPlaySong"
               round
               flat
               icon="skip_previous"
-              @click="onClick"
+              @click="player.setPreviousSong()"
             />
             <q-btn
               :disable="!playSongUrlInfo"
@@ -44,14 +48,14 @@
               @click="handlePlayOrPause"
             />
             <q-btn
-              :disable="!playSongUrlInfo"
+              :disable="!curentPlaySong"
               round
               flat
               icon="skip_next"
-              @click="onClick"
+              @click="player.setNextSong()"
             />
             <q-btn
-              :disable="!playSongUrlInfo"
+              :disable="!curentPlaySong"
               round
               flat
               label="词"
@@ -59,7 +63,7 @@
             />
           </div>
           <div class="flex no-wrap">
-            <div v-if="playSongUrlInfo" class="play-time">0.00</div>
+            <div v-if="curentPlaySong" class="play-time">0.00</div>
             <q-linear-progress
               :value="0.5"
               rounded
@@ -93,7 +97,7 @@
   </q-toolbar>
 </template>
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useLayoutStore, usePlayerStore } from 'src/stores';
 import { getPlayUrl } from 'src/api/player/index';
 import { IPlayUrl } from 'src/api/player/player.model';
@@ -113,7 +117,7 @@ let timeLen = computed(() => {
 });
 
 //监听当前播放歌曲变化
-watch(curentPlaySong, async () => {
+watchEffect(async () => {
   if (curentPlaySong.value) {
     const res = await getPlayUrl(curentPlaySong.value.id);
     playSongUrlInfo.value = res;
@@ -149,6 +153,17 @@ function handlePlayOrPause() {
 function onClick() {
   console.log('');
 }
+
+let playMode = computed(() => {
+  let table: {
+    [k in typeof player.playMode]: { lebal: string; icon: string };
+  } = {
+    0: { lebal: '循环播放', icon: 'loop' },
+    1: { lebal: '顺序播放', icon: 'earbuds' },
+    2: { lebal: '随机播放', icon: 'shuffle' },
+  };
+  return table[player.playMode];
+});
 </script>
 <style lang="scss" scoped>
 .play-time {
