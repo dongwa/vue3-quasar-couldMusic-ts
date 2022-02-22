@@ -97,7 +97,7 @@
   </q-toolbar>
 </template>
 <script lang="ts" setup>
-import { computed, ref, watch, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useLayoutStore, usePlayerStore } from 'src/stores';
 import { getPlayUrl } from 'src/api/player/index';
 import { IPlayUrl } from 'src/api/player/player.model';
