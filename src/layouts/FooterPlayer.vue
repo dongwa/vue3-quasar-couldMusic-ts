@@ -135,7 +135,6 @@ let playerAudio = ref<HTMLAudioElement>();
 let playing = ref(false);
 
 function onPlaying() {
-  console.log('on playing');
   playing.value = true;
 }
 
