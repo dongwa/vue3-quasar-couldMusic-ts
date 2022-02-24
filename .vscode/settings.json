@@ -6,5 +6,8 @@
   "editor.codeActionsOnSave": ["source.fixAll.eslint"],
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "volar.codeLens.scriptSetupTools": true
+  "volar.codeLens.scriptSetupTools": true,
+  "[vue]": {
+    "editor.defaultFormatter": "johnsoncodehk.volar"
+  }
 }

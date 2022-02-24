@@ -30,39 +30,25 @@
           >
             <q-item-section no-wrap class="q-pa-none col-7">
               <div class="flex items-center fit">
-                <div class="w-70 ellipsis">
-                  {{ item.name }}
-                </div>
-                <q-icon
-                  v-if="item.st === 0"
-                  size="sm"
-                  color="primary"
-                  name="iconSQ"
-                />
-                <q-icon
-                  v-if="item.mv"
-                  size="md"
-                  color="primary"
-                  name="iconmv"
-                />
+                <div class="w-70 ellipsis">{{ item.name }}</div>
+                <q-icon v-if="item.st === 0" size="sm" color="primary" name="iconSQ" />
+                <q-icon v-if="item.mv" size="md" color="primary" name="iconmv" />
               </div>
             </q-item-section>
-            <q-item-section no-wrap class="col-2 q-pa-none ellipsis">
-              {{ formatArtistsName(item.ar) }}
-            </q-item-section>
+            <q-item-section
+              no-wrap
+              class="col-2 q-pa-none ellipsis"
+            >{{ formatArtistsName(item.ar) }}</q-item-section>
             <q-item-section no-wrap class="col-1 artists-name q-pa-none">
               <q-icon class="rotate-135" name="link" />
             </q-item-section>
-            <q-item-section no-wrap class="col-1 artists-name q-pa-none">
-              {{ durationTime(item.dt) }}
-            </q-item-section>
+            <q-item-section no-wrap class="col-1 artists-name q-pa-none">{{ durationTime(item.dt) }}</q-item-section>
           </q-item>
         </template>
       </q-virtual-scroll>
     </q-tab-panel>
     <q-tab-panel name="history">
-      <div class="text-h6">Alarms</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <div class="text-h6">Alarms</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
     </q-tab-panel>
   </q-tab-panels>
 </template>
@@ -93,9 +79,8 @@ function formatArtistsName(artists: Ar[]): string {
 function durationTime(t: number) {
   let minutes = Math.floor(t / 1000 / 60);
   let second = Math.floor((t - minutes * 1000 * 60) / 1000);
-  return `${minutes >= 10 ? minutes : `0${minutes}`}:${
-    second >= 10 ? second : `0${minutes}`
-  }`;
+  return `${minutes >= 10 ? minutes : `0${minutes}`}:${second >= 10 ? second : `0${minutes}`
+    }`;
 }
 </script>
 

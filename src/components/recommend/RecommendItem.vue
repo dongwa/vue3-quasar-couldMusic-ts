@@ -1,11 +1,5 @@
 <template>
-  <q-card
-    square
-    :bordered="false"
-    flat
-    @mouseleave="isHover = false"
-    @mouseenter="isHover = true"
-  >
+  <q-card square :bordered="false" flat @mouseleave="isHover = false" @mouseenter="isHover = true">
     <!-- 普通歌单 -->
     <q-card-section v-if="recommend.type === 0" class="q-pa-none">
       <q-img class="radius-sm" spinner-color="primary" :src="recommend.picUrl">
@@ -14,10 +8,7 @@
           {{ playCount(recommend.playCount) }}
         </div>
         <transition name="fade" mode="in-out" persisted :duration="500">
-          <div
-            v-show="isHover"
-            class="absolute-bottom-right caption q-mr-sm q-mb-sm"
-          >
+          <div v-show="isHover" class="absolute-bottom-right caption q-mr-sm q-mb-sm">
             <q-btn
               :class="{ loading: loading }"
               size="sm"
@@ -25,10 +16,7 @@
               color="white"
               @click="changePlaylist(recommend.id)"
             >
-              <q-icon
-                color="primary"
-                :name="loading ? 'refresh' : 'play_arrow'"
-              />
+              <q-icon color="primary" :name="loading ? 'refresh' : 'play_arrow'" />
             </q-btn>
           </div>
         </transition>
@@ -38,10 +26,7 @@
     <q-card-section v-else class="q-pa-none">
       <q-img width="100%" class="radius-sm" src="~assets/daily.png">
         <transition name="fade" mode="in-out" persisted :duration="500">
-          <div
-            v-show="isHover"
-            class="absolute-bottom-right caption q-mr-sm q-mb-sm"
-          >
+          <div v-show="isHover" class="absolute-bottom-right caption q-mr-sm q-mb-sm">
             <q-btn size="sm" round color="white">
               <q-icon color="primary" name="play_arrow" />
             </q-btn>
@@ -49,9 +34,7 @@
         </transition>
       </q-img>
     </q-card-section>
-    <q-card-section class="q-mt-sm q-pa-none">
-      {{ recommend.name }}
-    </q-card-section>
+    <q-card-section class="q-mt-sm q-pa-none">{{ recommend.name }}</q-card-section>
   </q-card>
 </template>
 <script lang="ts" setup>

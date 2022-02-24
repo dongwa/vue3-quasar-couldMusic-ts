@@ -4,8 +4,7 @@
       <q-toolbar>
         <!-- logo和标题 -->
         <q-toolbar-title class="q-mr-xl cursor-pointer" shrink>
-          <q-icon size="lg" name="track_changes" />
-          网抑云音乐
+          <q-icon size="lg" name="track_changes" />网抑云音乐
         </q-toolbar-title>
         <!-- 前进后退按钮 -->
         <q-btn
@@ -18,25 +17,11 @@
           icon="keyboard_arrow_left"
           @click="goBack"
         />
-        <q-btn
-          round
-          size="sm"
-          flat
-          color="white"
-          glossy
-          icon="keyboard_arrow_right"
-        />
+        <q-btn round size="sm" flat color="white" glossy icon="keyboard_arrow_right" />
         <!-- 搜索框 -->
         <Search />
         <!-- 听歌识曲按钮 -->
-        <q-btn
-          round
-          size="md"
-          flat
-          color="grey-1"
-          class="q-ml-md bg-red-7"
-          icon="keyboard_voice"
-        />
+        <q-btn round size="md" flat color="grey-1" class="q-ml-md bg-red-7" icon="keyboard_voice" />
         <!-- 头像登录等 -->
         <q-space />
         <q-avatar
@@ -44,38 +29,16 @@
           size="70px"
           icon="account_circle"
           @click="layout.toggleLoginForm(true)"
-        >
-        </q-avatar>
+        ></q-avatar>
         <q-avatar v-else size="70px" :icon="getAvatar" />
         <span class="cursor-pointer btn-login">
           {{ auth.isLogin ? auth.userInfo.nickname : '未登录' }}
           <q-icon name="arrow_drop_down" />
         </span>
         <!-- 设置，主题和消息按钮 -->
-        <q-btn
-          round
-          size="sm"
-          flat
-          color="grey-1"
-          class="q-ml-sm"
-          icon="settings"
-        />
-        <q-btn
-          round
-          size="sm"
-          flat
-          color="grey-1"
-          class="q-ml-sm"
-          icon="palette"
-        />
-        <q-btn
-          round
-          size="sm"
-          flat
-          color="grey-1"
-          class="q-ml-sm"
-          icon="comment"
-        />
+        <q-btn round size="sm" flat color="grey-1" class="q-ml-sm" icon="settings" />
+        <q-btn round size="sm" flat color="grey-1" class="q-ml-sm" icon="palette" />
+        <q-btn round size="sm" flat color="grey-1" class="q-ml-sm" icon="comment" />
         <!-- 分割线，最小/大化，关闭 -->
         <q-separator spaced inset vertical dark />
         <q-btn dense flat icon="remove" />
@@ -84,23 +47,11 @@
       </q-toolbar>
     </q-header>
     <!-- 左边抽屉 -->
-    <q-drawer
-      v-model="layout.leftDrawerOpen"
-      side="left"
-      bordered
-      behavior="desktop"
-      :width="230"
-    >
+    <q-drawer v-model="layout.leftDrawerOpen" side="left" bordered behavior="desktop" :width="230">
       <side-bar />
     </q-drawer>
     <!-- 右边抽屉，只在点击当前歌单按钮时展开 -->
-    <q-drawer
-      v-model="layout.rightDrawerOpen"
-      side="right"
-      overlay
-      bordered
-      :width="400"
-    >
+    <q-drawer v-model="layout.rightDrawerOpen" side="right" overlay bordered :width="400">
       <right-drawer />
     </q-drawer>
     <!-- 主页面 -->

@@ -11,12 +11,7 @@
       v-ripple
     >
       <q-item-section avatar class="q-pa-none">
-        <q-img
-          class="radius-sm"
-          color="primary"
-          spinner-color="primary"
-          :src="item.picUrl"
-        >
+        <q-img class="radius-sm" color="primary" spinner-color="primary" :src="item.picUrl">
           <div class="absolute-center caption">
             <q-btn size="xs" round color="white">
               <q-icon color="primary" name="play_arrow" />
@@ -25,22 +20,10 @@
         </q-img>
       </q-item-section>
       <q-item-section class="q-pa-none q-ml-sm column">
-        <div class="w-80 ellipsis">
-          {{ item.name }}
-        </div>
+        <div class="w-80 ellipsis">{{ item.name }}</div>
         <div class="artists-name text-caption">
-          <q-icon
-            v-if="item.song.album.status === 0"
-            size="sm"
-            color="primary"
-            name="iconSQ"
-          />
-          <q-icon
-            v-if="item.song.mvid"
-            size="md"
-            color="primary"
-            name="iconmv"
-          />
+          <q-icon v-if="item.song.album.status === 0" size="sm" color="primary" name="iconSQ" />
+          <q-icon v-if="item.song.mvid" size="md" color="primary" name="iconmv" />
           {{ getArtists(item.song.artists) }}
         </div>
       </q-item-section>
