@@ -10,12 +10,7 @@
         <q-icon size="xs" class="q-mr-xs" :name="getCategory(category, true)" />
         {{ getCategory(category) }}
       </div>
-      <q-item
-        clickable
-        v-ripple
-        v-for="item in getList(category)"
-        :key="item.id"
-      >
+      <q-item clickable v-ripple v-for="item in getList(category)" :key="item.id">
         <q-item-section no-wrap class="ellipsis full-width">
           <div class="ellipsis" v-html="getItemInfo(category, item)"></div>
         </q-item-section>

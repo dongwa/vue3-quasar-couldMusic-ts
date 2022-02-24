@@ -2,14 +2,7 @@
   <q-card class="my-card">
     <q-card-section class="row items-center q-ma-none q-pa-none">
       <q-space />
-      <q-btn
-        icon="close"
-        color="#ccc"
-        flat
-        round
-        dense
-        @click="layout.toggleLoginForm(false)"
-      />
+      <q-btn icon="close" color="#ccc" flat round dense @click="layout.toggleLoginForm(false)" />
     </q-card-section>
     <q-card-section>
       <div class="text-h6 text-center">扫码登陆</div>

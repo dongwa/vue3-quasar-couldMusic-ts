@@ -3,20 +3,13 @@
     <q-card class="full-width" flat>
       <q-card-section class="row justify-between" horizontal>
         <q-card-section horizontal class="col-2 song-info">
-          <div
-            v-show="curentPlaySong"
-            class="full-width flex items-center no-wrap"
-          >
+          <div v-show="curentPlaySong" class="full-width flex items-center no-wrap">
             <q-avatar rounded size="50px" class="q-mr-sm">
               <img :src="curentPlaySong?.al.picUrl" />
             </q-avatar>
             <div class="full-width column">
-              <div class="full-width text-weight-bold ellipsis max-w">
-                {{ curentPlaySong?.name }}
-              </div>
-              <div class="full-width text-subtitle1 ellipsis max-w">
-                {{ artistsNames }}
-              </div>
+              <div class="full-width text-weight-bold ellipsis max-w">{{ curentPlaySong?.name }}</div>
+              <div class="full-width text-subtitle1 ellipsis max-w">{{ artistsNames }}</div>
             </div>
           </div>
         </q-card-section>
@@ -29,9 +22,7 @@
               :icon="playMode.icon"
               @click="player.changePlayMode()"
             >
-              <q-tooltip>
-                {{ playMode.lebal }}
-              </q-tooltip>
+              <q-tooltip>{{ playMode.lebal }}</q-tooltip>
             </q-btn>
             <q-btn
               :disable="!curentPlaySong"
@@ -54,18 +45,10 @@
               icon="skip_next"
               @click="player.setNextSong()"
             />
-            <q-btn
-              :disable="!curentPlaySong"
-              round
-              flat
-              label="词"
-              @click="onClick"
-            />
+            <q-btn :disable="!curentPlaySong" round flat label="词" @click="onClick" />
           </div>
           <div class="flex no-wrap items-center">
-            <div v-if="curentPlaySong" class="play-time">
-              {{ curTimeStr }}
-            </div>
+            <div v-if="curentPlaySong" class="play-time">{{ curTimeStr }}</div>
             <q-slider
               class="q-mx-sm"
               thumb-size="10px"
@@ -75,9 +58,7 @@
               :min="0"
               :max="Math.ceil(playerAudio?.duration || 100000)"
             />
-            <div v-if="curentPlaySong" class="play-time">
-              {{ timeLen }}
-            </div>
+            <div v-if="curentPlaySong" class="play-time">{{ timeLen }}</div>
           </div>
         </q-card-section>
         <q-card-section>
@@ -90,12 +71,7 @@
               @playing="onPlaying"
               @ended="ended"
             ></audio>
-            <q-btn
-              flat
-              round
-              icon="queue_music"
-              @click="layout.togglerightDrawerOpen"
-            />
+            <q-btn flat round icon="queue_music" @click="layout.togglerightDrawerOpen" />
           </q-card-actions>
         </q-card-section>
       </q-card-section>

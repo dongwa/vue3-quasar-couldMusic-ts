@@ -13,7 +13,7 @@
       <q-item-section class="sidebar-item">私人FM</q-item-section>
     </q-item>
     <q-item class="sub-title">
-      <q-item-section> 我的音乐 </q-item-section>
+      <q-item-section>我的音乐</q-item-section>
     </q-item>
     <q-item clickable v-ripple to="/local" exact active-class="active-class">
       <q-item-section side>
@@ -51,7 +51,7 @@
       <q-item-section side>
         <q-icon size="sm" name="favorite_border" />
       </q-item-section>
-      <q-item-section class="sidebar-item"> 我喜欢的音乐 </q-item-section>
+      <q-item-section class="sidebar-item">我喜欢的音乐</q-item-section>
       <q-item-section side>
         <q-btn icon="favorite" outline size="xs" rounded />
       </q-item-section>

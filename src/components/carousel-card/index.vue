@@ -26,11 +26,7 @@
           spinner-color="primary"
           spinner-size="82px"
         >
-          <q-badge
-            class="chip"
-            :color="item.titleColor"
-            :label="item.typeTitle"
-          />
+          <q-badge class="chip" :color="item.titleColor" :label="item.typeTitle" />
         </q-img>
       </swiper-slide>
     </swiper>

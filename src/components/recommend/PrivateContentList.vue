@@ -1,12 +1,7 @@
 <template>
   <div class="text-h6 text-weight-bolder">独家放送 ></div>
   <div class="q-pt-sm row q-gutter-xl">
-    <PrivateContent
-      class="col"
-      v-for="(item, index) in privateContent"
-      :key="index"
-      :item="item"
-    />
+    <PrivateContent class="col" v-for="(item, index) in privateContent" :key="index" :item="item" />
   </div>
 </template>
 <script lang="ts" setup>
