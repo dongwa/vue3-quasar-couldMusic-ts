@@ -29,13 +29,15 @@ export const createQRbase64 = async (key: string) => {
  * 803为授权登录成功(803状态码下会返回cookies和用户名头像)
  **/
 export const checkPrLogin = async (key: string) => {
-  return await api.get(`${ApiUrl.check}?key=${key}&timerstamp=${Date.now()}`);
+  return await (
+    await api.get(`${ApiUrl.check}?key=${key}&timerstamp=${Date.now()}`)
+  ).data;
 };
 
 //获取到cookie后可以通过此接口可获取用户详细数据
-export const getUserInfo = async () => {
-  const res: {
-    profile: IUserInfo;
-  } = await api.get(`${ApiUrl.getUerInfo}?timerstamp=${Date.now()}`);
-  return res;
+export const getUserInfo = async (): Promise<{
+  profile: IUserInfo;
+}> => {
+  const res = await api.get(`${ApiUrl.getUerInfo}?timerstamp=${Date.now()}`);
+  return res.data;
 };

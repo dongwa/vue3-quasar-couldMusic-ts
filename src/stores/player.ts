@@ -17,7 +17,7 @@ export interface IPlayerState {
 
 export const usePlayerStore = defineStore('player', {
   state: (): IPlayerState => ({
-    playMode: 0,
+    playMode: 1,
     index: 0,
     curentPlaySong: null,
     playlist: [],
@@ -26,6 +26,7 @@ export const usePlayerStore = defineStore('player', {
   actions: {
     setPlaylist(data: ISongInfo[]) {
       this.playlist = data;
+      this.history = [];
     },
     changePlayMode() {
       this.playMode = (this.playMode + 1) % 3;
@@ -40,24 +41,20 @@ export const usePlayerStore = defineStore('player', {
     setPreviousSong() {
       this.history.pop();
       let index = this.history.pop();
+      /** 若历史列表中没有上一曲了，则随机播放 */
       if (!index) {
-        index = 0;
         const len = this.playlist.length;
-        if (this.playMode > 1) index = Math.floor(Math.random() * (len + 1));
-        else index = (index - this.playMode) % len;
-        this.curentPlaySong = this.playlist[index];
-        this.history.push(index);
+        index = Math.floor(Math.random() * (len + 1));
       }
       this.curentPlaySong = this.playlist[index];
     },
     /** 下一首 */
     setNextSong() {
-      let index = 0;
       if (this.playMode > 1)
-        index = Math.floor(Math.random() * (this.playlist.length + 1));
-      else index += this.playMode;
-      this.curentPlaySong = this.playlist[index];
-      this.history.push(index);
+        this.index = Math.floor(Math.random() * (this.playlist.length + 1));
+      else this.index += this.playMode;
+      this.curentPlaySong = this.playlist[this.index];
+      this.history.push(this.index);
     },
   },
   persist: true,

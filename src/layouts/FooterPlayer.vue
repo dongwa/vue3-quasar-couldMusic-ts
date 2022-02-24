@@ -62,14 +62,18 @@
               @click="onClick"
             />
           </div>
-          <div class="flex no-wrap">
-            <div v-if="curentPlaySong" class="play-time">0.00</div>
-            <q-linear-progress
-              :value="0.5"
-              rounded
-              color="#ccc"
-              track-color="primary"
-              class="q-mt-sm"
+          <div class="flex no-wrap items-center">
+            <div v-if="curentPlaySong" class="play-time">
+              {{ curTimeStr }}
+            </div>
+            <q-slider
+              class="q-mx-sm"
+              thumb-size="10px"
+              v-model="progress"
+              @change="updateProgress"
+              :step="1"
+              :min="0"
+              :max="Math.ceil(playerAudio?.duration || 100000)"
             />
             <div v-if="curentPlaySong" class="play-time">
               {{ timeLen }}
@@ -82,7 +86,9 @@
               :src="playSongUrlInfo?.url"
               ref="playerAudio"
               autoplay
+              @timeupdate="timeupdate"
               @playing="onPlaying"
+              @ended="ended"
             ></audio>
             <q-btn
               flat
@@ -97,7 +103,7 @@
   </q-toolbar>
 </template>
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue';
+import { computed, Ref, ref, watchEffect } from 'vue';
 import { useLayoutStore, usePlayerStore } from 'src/stores';
 import { getPlayUrl } from 'src/api/player/index';
 import { IPlayUrl } from 'src/api/player/player.model';
@@ -106,15 +112,23 @@ const player = usePlayerStore();
 let curentPlaySong = ref(computed(() => player.curentPlaySong));
 let playSongUrlInfo = ref<IPlayUrl>();
 
-let timeLen = computed(() => {
-  if (curentPlaySong.value) {
-    let s = Math.floor(curentPlaySong.value?.dt / 1000);
-    let m = Math.floor(s / 60);
-    let second = s - m * 60;
+const timeFormat = (t: Ref<number>) => {
+  return computed(() => {
+    let m = Math.floor(t.value / 60);
+    let second = t.value - m * 60;
     return `${m}:${second}`;
-  }
-  return '0:00';
-});
+  });
+};
+
+let playerAudio = ref<HTMLAudioElement>();
+let playing = ref(false);
+let progress = ref(0);
+
+let timeLen = timeFormat(
+  ref(Math.ceil((curentPlaySong.value?.dt as number) / 1000))
+);
+
+let curTimeStr = timeFormat(progress);
 
 //监听当前播放歌曲变化
 watchEffect(async () => {
@@ -131,11 +145,7 @@ let artistsNames = computed(() => {
   return '';
 });
 
-let playerAudio = ref<HTMLAudioElement>();
-let playing = ref(false);
-
 function onPlaying() {
-  console.log('on playing');
   playing.value = true;
 }
 
@@ -153,6 +163,20 @@ function handlePlayOrPause() {
 function onClick() {
   console.log('');
 }
+
+const updateProgress = (e: number) => {
+  if (playerAudio.value) {
+    playerAudio.value.currentTime = e;
+  }
+};
+
+const timeupdate = (e: Event) => {
+  progress.value = Math.ceil((e.target as HTMLAudioElement).currentTime);
+};
+
+const ended = () => {
+  player.setNextSong();
+};
 
 let playMode = computed(() => {
   let table: {
