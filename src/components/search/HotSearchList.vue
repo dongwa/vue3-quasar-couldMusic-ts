@@ -15,7 +15,14 @@
         <q-item-section>
           <q-item-label :class="[{ 'text-weight-bold': index < 3 }, 'name']">
             {{ item.searchWord }}
-            <q-img class="hot-icon" width="25px" v-if="item.iconType" :src="item.iconUrl"></q-img>
+            <q-img
+              :class="[{ 'scale_salf': item.iconType === 5 }, 'hot-icon']"
+              fit="scale-down"
+              width="25px"
+              height="25px"
+              v-if="item.iconType"
+              :src="item.iconUrl"
+            ></q-img>
             <span class="score">{{ item.score }}</span>
           </q-item-label>
           <q-item-label class="content">{{ item.content }}</q-item-label>
@@ -55,6 +62,9 @@ const { data: hotSearchList, loading } = useFetchWithLoading(getHotSearch);
       font-size: 14px;
       font-size: 13px;
       color: #333;
+    }
+    .scale_salf {
+      transform: scale(0.5);
     }
     .hot-icon {
       margin: 0 0 0 10px;
