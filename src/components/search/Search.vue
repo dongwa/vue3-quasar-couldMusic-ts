@@ -11,6 +11,7 @@
       debounce="300"
       @focus="togglePopup = true"
       @blur="togglePopup = false"
+      @keyup.enter="submit"
     >
       <template v-slot:prepend>
         <q-icon name="search" color="white" />
@@ -29,11 +30,19 @@
 import { ref, provide } from 'vue';
 import HotSearchList from './HotSearchList.vue';
 import CommonSearchList from './CommonSearchList.vue';
+import { useRouter } from 'vue-router';
 
 let searchVal = ref('');
 let togglePopup = ref(false);
 
 provide('searchVal', searchVal);
+
+const router = useRouter()
+
+const submit = () => {
+  togglePopup.value = false
+  router.push(`/search?word=${searchVal.value}`)
+}
 </script>
 
 <style lang="scss" scoped>
