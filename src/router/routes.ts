@@ -39,12 +39,12 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'search',
-        // redirect: 'search/song',
+        redirect: '/search/song',
         component: () => import('pages/search/Index.vue'),
         children: [
           {
             path: 'song',
-            component: () => import('pages/search/Index.vue'),
+            component: () => import('pages/search/Song.vue'),
           },
         ],
       },
