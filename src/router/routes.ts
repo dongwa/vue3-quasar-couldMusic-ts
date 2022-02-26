@@ -37,6 +37,18 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: 'search',
+        // redirect: 'search/song',
+        component: () => import('pages/search/Index.vue'),
+        children: [
+          {
+            path: 'song',
+            component: () => import('pages/search/Index.vue'),
+          },
+        ],
+      },
+
       { path: 'friends', component: () => import('pages/Friends.vue') },
       { path: 'live', component: () => import('pages/Live.vue') },
       { path: 'FM', component: () => import('pages/PersonalFM.vue') },
