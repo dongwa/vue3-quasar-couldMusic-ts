@@ -5,8 +5,6 @@
 <script lang="ts" setup>
 import { provide } from 'vue';
 import { useQuasar } from 'quasar';
-import { Ar } from './api/player/playlist.model';
-
 const $q = useQuasar();
 
 function getArtists(artists: Ar[]) {

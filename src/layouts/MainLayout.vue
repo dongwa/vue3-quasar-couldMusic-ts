@@ -15,13 +15,13 @@
         <q-btn round size="md" flat color="grey-1" class="q-ml-md bg-red-7" icon="keyboard_voice" />
         <!-- 头像登录等 -->
         <q-space />
-        <q-avatar v-if="!auth.isLogin" size="70px" icon="account_circle" @click="layout.toggleLoginForm(true)">
+        <q-avatar v-if="!auth.isLogin" size="30px" icon="account_circle" @click="layout.toggleLoginForm(true)">
         </q-avatar>
-        <q-avatar v-else size="70px" :icon="getAvatar" />
-        <span class="cursor-pointer btn-login">
-          {{ auth.isLogin ? auth.userInfo.nickname : '未登录' }}
-          <q-icon name="arrow_drop_down" />
+        <q-avatar class="rounded-avatar" v-else size="30px" :icon="getAvatar" />
+        <span class="cursor-pointer btn-login username ellipsis">
+          <p class="ellipsis q-ma-none"> {{ auth.isLogin ? auth.userInfo.nickname : '未登录' }}</p>
         </span>
+        <q-icon name="arrow_drop_down" />
         <!-- 设置，主题和消息按钮 -->
         <q-btn round size="sm" flat color="grey-1" class="q-ml-sm" icon="settings" />
         <q-btn round size="sm" flat color="grey-1" class="q-ml-sm" icon="palette" />
@@ -73,7 +73,7 @@ const goBack = () => {
 };
 const layout = useLayoutStore();
 
-const getAvatar = computed(() => `img:${auth.userInfo.avatarUrl}`);
+const getAvatar = computed(() => auth.userInfo.avatarUrl ? `img:${auth.userInfo.avatarUrl}` : 'account_circle');
 </script>
 <style lang="scss" scoped>
 .header {
@@ -88,5 +88,18 @@ const getAvatar = computed(() => `img:${auth.userInfo.avatarUrl}`);
 
 .btn-login:hover {
   color: white;
+}
+
+.username {
+  max-width: 70px;
+  margin-left: 4px;
+}
+
+.rounded-avatar :deep(.q-icon) {
+  border-radius: 100%;
+}
+
+.rounded-avatar :deep(.q-avatar__content) {
+  font-size: 1em;
 }
 </style>
