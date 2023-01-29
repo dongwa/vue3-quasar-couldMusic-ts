@@ -1,6 +1,4 @@
-import { IAlbum, ISong, IArtist } from '../player/player.model';
-
-export interface hotSearchItem {
+declare interface hotSearchItem {
   alg: string;
   content: string;
   iconType: number;
@@ -11,7 +9,7 @@ export interface hotSearchItem {
   url: string;
 }
 
-export interface ICommonSearch {
+declare interface ICommonSearch {
   albums?: IAlbum[];
   songs?: ISong[];
   artists?: IArtist[];

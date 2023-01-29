@@ -1,6 +1,4 @@
-import { api } from 'src/boot/axios';
-import { IPlayUrl } from './player.model';
-import { IPlaylistDetail, ISongInfo } from './playlist.model';
+import { api } from 'src/api/axios';
 
 export enum PlayerApiUrl {
   playlist = '/playlist/detail', //传入歌单id获取歌单信息

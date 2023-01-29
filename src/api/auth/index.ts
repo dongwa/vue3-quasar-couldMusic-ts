@@ -1,5 +1,4 @@
-import { api } from '../../boot/axios';
-import { IUserInfo } from './auth.model';
+import { api } from '../axios';
 
 enum ApiUrl {
   getKey = '/login/qr/key', //说明: 调用此接口可生成一个key
@@ -7,6 +6,7 @@ enum ApiUrl {
   check = '/login/qr/check',
   getUerInfo = '/user/account',
 }
+
 //调用此接口可生成一个用于二维码登录的key
 export const getQRKey = async (): Promise<string> => {
   const res = await api.get(`${ApiUrl.getKey}?timerstamp=${Date.now()}`);

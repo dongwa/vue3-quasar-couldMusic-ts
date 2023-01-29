@@ -1,4 +1,4 @@
-export interface ISong {
+declare interface ISong {
   name: string;
   id: number;
   position: number;
@@ -46,7 +46,7 @@ export interface ISong {
   privilege: IPrivilege;
 }
 
-export interface IPrivilege {
+declare interface IPrivilege {
   id: number;
   fee: number;
   payed: number;
@@ -68,19 +68,19 @@ export interface IPrivilege {
   chargeInfoList: IChargeInfoList[];
 }
 
-export interface IChargeInfoList {
+declare interface IChargeInfoList {
   rate: number;
   chargeUrl?: any;
   chargeMessage?: any;
   chargeType: number;
 }
 
-export interface IFreeTrialPrivilege {
+declare interface IFreeTrialPrivilege {
   resConsumable: boolean;
   userConsumable: boolean;
 }
 
-export interface IHMusic {
+declare interface IHMusic {
   name?: any;
   id: number;
   size: number;
@@ -92,7 +92,7 @@ export interface IHMusic {
   volumeDelta: number;
 }
 
-export interface IAlbum {
+declare interface IAlbum {
   name: string;
   id: number;
   type: string;
@@ -121,7 +121,7 @@ export interface IAlbum {
   picId_str: string;
 }
 
-export interface IArtist {
+declare interface IArtist {
   name: string;
   id: number;
   picId: number;
@@ -136,7 +136,7 @@ export interface IArtist {
   topicPerson: number;
 }
 
-export interface IPlayUrl {
+declare interface IPlayUrl {
   id: number;
   url: string;
   br: number;

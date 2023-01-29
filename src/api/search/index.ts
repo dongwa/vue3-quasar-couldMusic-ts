@@ -1,6 +1,4 @@
-import { api } from '../../boot/axios';
-import { hotSearchItem } from './search.model';
-export * from './search.model';
+import { api } from '../axios';
 
 enum SearchApi {
   keywordsSearch = '/cloudsearch',

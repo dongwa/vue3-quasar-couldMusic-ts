@@ -1,11 +1,4 @@
-import {
-  IBannerInfo,
-  IPrivateConetnt,
-  IPrivateConetntList,
-  IPlayListInfo,
-  INewSongsInfo,
-} from './recommend.model';
-import { api } from '../../boot/axios';
+import { api } from '../axios';
 
 enum RecommendApiUrl {
   getBanners = '/banner',

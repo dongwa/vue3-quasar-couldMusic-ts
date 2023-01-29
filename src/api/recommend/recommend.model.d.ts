@@ -1,7 +1,5 @@
-import { ISong } from '../player/player.model';
-
 //歌单信息（用户首页推荐歌单）
-export interface IPlayListInfo {
+declare interface IPlayListInfo {
   id: number;
   type: number;
   name: string;
@@ -15,7 +13,7 @@ export interface IPlayListInfo {
   alg: string;
 }
 //首页banner信息
-export interface IBannerInfo {
+declare interface IBannerInfo {
   // adDispatchJson: null;
   // adLocation: null;
   // adSource: null;
@@ -44,7 +42,7 @@ export interface IBannerInfo {
 }
 
 //独家内容信息（用于首页独家放送）
-export interface IPrivateConetnt {
+declare interface IPrivateConetnt {
   id: number;
   url: string;
   picUrl: string;
@@ -55,14 +53,14 @@ export interface IPrivateConetnt {
   alg: string;
 }
 
-export interface IPrivateConetntList {
+declare interface IPrivateConetntList {
   result: IPrivateConetnt[];
   more: boolean;
   offset: number;
 }
 
 //用于首页最新音乐
-export interface INewSongsInfo {
+declare interface INewSongsInfo {
   id: number;
   type: number;
   name: string;

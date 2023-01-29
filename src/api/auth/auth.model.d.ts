@@ -1,4 +1,4 @@
-export interface IUserInfo {
+declare interface IUserInfo {
   userId: number;
   userType: number;
   nickname: string;

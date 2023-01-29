@@ -1,4 +1,4 @@
-export interface IPlaylistDetail {
+declare interface IPlaylistDetail {
   id: number;
   name: string;
   coverImgId: number;
@@ -42,7 +42,7 @@ export interface IPlaylistDetail {
   remixVideo?: any;
 }
 
-export interface TrackId {
+declare interface TrackId {
   id: number;
   v: number;
   t: number;
@@ -50,7 +50,7 @@ export interface TrackId {
   alg?: any;
 }
 
-export interface Track {
+declare interface Track {
   name: string;
   id: number;
   pst: number;
@@ -107,7 +107,7 @@ interface Al {
   pic: number;
 }
 
-export interface Ar {
+declare interface Ar {
   id: number;
   name: string;
   tns: any[];
@@ -158,7 +158,7 @@ interface Experts {
   '2': string;
 }
 
-export interface ISongInfo {
+declare interface ISongInfo {
   name: string;
   id: number;
   pst: number;
