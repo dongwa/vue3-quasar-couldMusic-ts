@@ -55,24 +55,10 @@ module.exports = configure(function (/* ctx */) {
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
-      // vueRouterBase,
-      // vueDevtools,
-      // vueOptionsAPI: false,
 
-      // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
-
-      // publicPath: '/',
-      // analyze: true,
-      // env: {},
-      // rawDefine: {}
-      // ignorePublicFolder: true,
-      // minify: false,
-      // polyfillModulePreload: true,
-      // distDir
-
-      // extendViteConf (viteConf) {},
-      // viteVuePluginOptions: {},
-
+      alias: {
+        api: path.join(__dirname, './src/api'),
+      },
       vitePlugins: [
         [
           '@intlify/vite-plugin-vue-i18n',
@@ -95,7 +81,6 @@ module.exports = configure(function (/* ctx */) {
               if (route.path === '/home') {
                 route.redirect = '/home/recommend';
               }
-              // Augment the route with meta that indicates that the route requires authentication.
               return route;
             },
           },
