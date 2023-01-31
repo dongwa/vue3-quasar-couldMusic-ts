@@ -1,6 +1,12 @@
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { Notify } from 'quasar';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosPromise,
+  AxiosRequestConfig,
+  AxiosResponse,
+  Canceler,
+  CancelTokenSource,
+} from 'axios';
 const CancelToken = axios.CancelToken;
 
 const api = axios.create({
@@ -31,56 +37,89 @@ api.interceptors.response.use(
   }
 );
 
-export function useGet<T>(url: string, params = {}, opt?: AxiosRequestConfig) {
-  return useFetch<T>(url, {
+export interface IFetchControler<D> {
+  loading: boolean;
+  data: D;
+  source: CancelTokenSource;
+}
+
+export interface FetchReturn<D> {
+  cancel: Canceler;
+  loading: Ref<boolean>;
+  data: Ref<D | undefined>;
+  source: Ref<CancelTokenSource>;
+  response: Ref<AxiosResponse<D> | undefined>;
+}
+
+export type FetchControler<D> = ReturnType<typeof useFetchControler<D>>;
+
+export type FetchConfig<D> = AxiosRequestConfig & {
+  controller?: FetchControler<D>;
+};
+
+export function useFetchControler<D>() {
+  return {
+    loading: ref(true),
+    data: ref<D>(),
+    source: ref(CancelToken.source()),
+  };
+}
+
+export function useGet<D>(url: string, params = {}, opt: FetchConfig<D> = {}) {
+  return useFetch<D>(url, {
     method: 'GET',
     params,
     ...opt,
   });
 }
 
-export function usePost<T>(url: string, data = {}, opt?: AxiosRequestConfig) {
-  return useFetch<T>(url, {
+export function usePost<D>(url: string, data = {}, opt: FetchConfig<D> = {}) {
+  return useFetch<D>(url, {
     method: 'POST',
     data,
     ...opt,
   });
 }
 
-export function useFetch<T>(url: string, opt: AxiosRequestConfig) {
-  const loading = ref(true);
-  const data = ref<T>();
-  const res = ref<AxiosResponse<T>>();
-  const source = CancelToken.source();
+export function useFetch<D>(
+  url: string,
+  opt: FetchConfig<D> = {}
+): FetchReturn<D> & Promise<FetchReturn<D>> {
+  const response = ref<AxiosResponse<D>>();
   const timerstamp = Date.now().toString();
+  const controller = opt?.controller || useFetchControler<D>();
+  opt.cancelToken = controller.source.value.token;
   if (opt.params) opt.params.timerstamp = timerstamp;
   if (opt.data) opt.data.timerstamp = timerstamp;
-  (opt.cancelToken = source.token),
-    api(url, opt)
-      .then((r) => {
-        loading.value = false;
-        data.value = r.data;
-        res.value = r;
-        console.log('r', r);
-      })
-      .catch((e) => {
-        if (axios.isCancel(e)) {
-          console.log('Request canceled', e.message);
-          Notify.create({
-            color: 'yellow',
-            message: '已取消',
-          });
-        } else {
-          throw e;
-        }
-      });
 
-  return {
-    loading,
-    data,
-    res,
-    cancel: source.cancel,
+  const p = api(url, opt) as AxiosPromise<D>;
+
+  const result = {
+    response,
+    ...controller,
+    cancel: controller.source.value.cancel,
   };
+
+  const rp = p.then((r) => {
+    controller.loading.value = false;
+    controller.data.value = r.data;
+    response.value = r;
+    return result;
+  });
+
+  p.catch((e) => {
+    if (axios.isCancel(e)) {
+      console.log('Request canceled', e.message);
+      Notify.create({
+        color: 'yellow',
+        message: '已取消',
+      });
+    } else {
+      throw e;
+    }
+  });
+
+  return Object.assign(rp, result);
 }
 
 export { axios, api };

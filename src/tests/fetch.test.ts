@@ -4,19 +4,36 @@ const testAPis = {
   search: '/search',
 };
 
-it('useGet', async () => {
-  const { data, res } = useGet(testAPis.search, {
-    keywords: '海阔天空',
+describe('useFetch', () => {
+  it('without await and then', async () => {
+    const { response } = useGet(testAPis.search, {
+      keywords: '海阔天空',
+    });
+    await retry(
+      () => {
+        expect(response.value).not.toBeUndefined();
+        expect(response.value?.status).lessThanOrEqual(400);
+      },
+      {
+        timeout: 3 * 1000,
+      }
+    );
   });
-  await retry(
-    () => {
-      expect(res.value).not.toBeUndefined();
-      expect(res.value?.status).lessThanOrEqual(400);
-      console.log('data====>', data.value);
-      console.log('res=====>', res.value);
-    },
-    {
-      timeout: 3 * 1000,
-    }
-  );
+
+  it('it whit await', async () => {
+    const { response } = await useGet<IUserInfo>(testAPis.search, {
+      keywords: '海阔天空',
+    });
+    expect(response.value).not.toBeUndefined();
+    expect(response.value?.status).lessThanOrEqual(400);
+  });
+
+  it('it whit then', () => {
+    useGet<IUserInfo>(testAPis.search, {
+      keywords: '海阔天空',
+    }).then((r) => {
+      expect(r.response.value).not.toBeUndefined();
+      expect(r.response.value?.status).lessThanOrEqual(400);
+    });
+  });
 });
